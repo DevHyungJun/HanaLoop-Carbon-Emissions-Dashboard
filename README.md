@@ -11,6 +11,10 @@
 
 ## 실행 방법
 
+### 배포 (Live Demo)
+
+[https://hana-loop-carbon-emissions-dashboar.vercel.app/](https://hana-loop-carbon-emissions-dashboar.vercel.app/)
+
 ### 사전 요구사항
 
 - Node.js 20+
