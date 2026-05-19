@@ -126,6 +126,10 @@
   html {
     @apply font-sans;
   }
+  img {
+    -webkit-user-drag: none;
+    user-select: none;
+  }
   button:not(:disabled),
   select:not(:disabled),
   a[href] {

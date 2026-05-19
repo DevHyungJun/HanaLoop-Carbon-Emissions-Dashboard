@@ -40,6 +40,7 @@ export type MessageKey =
   | "overview.hero.badge"
   | "overview.hero.title"
   | "overview.hero.subtitle"
+  | "overview.hero.imageAlt"
   | "overview.pcf.title"
   | "overview.pcf.description"
   | "overview.scope.title"
@@ -250,6 +251,7 @@ const ko: Messages = {
   "overview.hero.title": "제품 탄소 발자국(PCF)을 한눈에 관리하세요",
   "overview.hero.subtitle":
     "HanaLoop은 원자재·전기·운송 등 활동 데이터를 입력하면 제품별 PCF를 자동 계산하는 탄소 관리 SaaS입니다. 경영진은 추세와 리스크를, 실무자는 입력·검증·감축 계획을 같은 플랫폼에서 수행합니다.",
+  "overview.hero.imageAlt": "이끼 위에 놓인 지구본과 녹색 잎",
   "overview.pcf.title": "PCF(Product Carbon Footprint)란?",
   "overview.pcf.description":
     "PCF는 제품 하나가 원료 채취부터 생산, 유통, 사용, 폐기에 이르기까지 전 과정에서 발생하는 온실가스 배출량을 CO₂ 환산 톤(tCO2e)으로 표현한 지표입니다. 고객사·규제·공급망 요구에 대응하기 위한 핵심 탄소 회계 단위입니다.",
@@ -473,6 +475,7 @@ const en: Messages = {
   "overview.hero.title": "Manage product carbon footprints at a glance",
   "overview.hero.subtitle":
     "HanaLoop is a carbon management SaaS that automatically calculates product-level PCF from activity data such as materials, electricity, and transport. Executives track trends and risks; practitioners handle input, validation, and reduction planning in one place.",
+  "overview.hero.imageAlt": "Globe on moss with green leaves",
   "overview.pcf.title": "What is PCF (Product Carbon Footprint)?",
   "overview.pcf.description":
     "PCF expresses the total greenhouse gas emissions across a product's life cycle—from raw materials and manufacturing to distribution, use, and disposal—as CO₂ equivalent tons (tCO2e). It is the core carbon accounting unit for customers, regulations, and supply chain requirements.",
