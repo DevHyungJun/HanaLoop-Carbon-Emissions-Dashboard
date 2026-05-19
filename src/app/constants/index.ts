@@ -47,4 +47,11 @@ export {
   COUNTRY_CHART_THEMES,
 } from "./companies";
 
+export {
+  ACTIVITY_DATA_MONTHS,
+  ACTIVITY_DATA_PAGE_SIZE,
+  ALL_MONTHS_FILTER,
+  ALL_SOURCES_FILTER,
+} from "./activity-data";
+
 export * from "./button";

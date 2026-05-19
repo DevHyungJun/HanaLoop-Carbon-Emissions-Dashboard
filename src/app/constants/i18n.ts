@@ -126,7 +126,41 @@ export type MessageKey =
   | "companies.chart.emissions"
   | "companies.pagination.previous"
   | "companies.pagination.next"
-  | "companies.pagination.summary";
+  | "companies.pagination.summary"
+  | "activityData.toolbar.company"
+  | "activityData.toolbar.country"
+  | "activityData.toolbar.noCompany"
+  | "activityData.toolbar.month"
+  | "activityData.toolbar.source"
+  | "activityData.toolbar.allMonths"
+  | "activityData.toolbar.selectMonth"
+  | "activityData.toolbar.allSources"
+  | "activityData.toolbar.period"
+  | "activityData.toolbar.refresh"
+  | "activityData.monthPicker.title"
+  | "activityData.monthPicker.year"
+  | "activityData.monthPicker.month"
+  | "activityData.monthPicker.apply"
+  | "activityData.loading"
+  | "activityData.error"
+  | "activityData.kpi.recordCount"
+  | "activityData.kpi.recordCountDesc"
+  | "activityData.kpi.totalEmissions"
+  | "activityData.kpi.totalEmissionsDesc"
+  | "activityData.kpi.sourceCount"
+  | "activityData.kpi.sourceCountDesc"
+  | "activityData.kpi.monthlyAvg"
+  | "activityData.kpi.monthlyAvgDesc"
+  | "activityData.table.title"
+  | "activityData.table.description"
+  | "activityData.table.month"
+  | "activityData.table.source"
+  | "activityData.table.scope"
+  | "activityData.table.emissions"
+  | "activityData.table.empty"
+  | "activityData.pagination.previous"
+  | "activityData.pagination.next"
+  | "activityData.pagination.summary";
 
 type Messages = Record<MessageKey, string>;
 
@@ -268,6 +302,41 @@ const ko: Messages = {
   "companies.pagination.previous": "이전",
   "companies.pagination.next": "다음",
   "companies.pagination.summary": "총 {{total}}개 중 {{from}}-{{to}}",
+  "activityData.toolbar.company": "회사",
+  "activityData.toolbar.country": "국가",
+  "activityData.toolbar.noCompany": "해당 국가에 회사 없음",
+  "activityData.toolbar.month": "월",
+  "activityData.toolbar.source": "배출원",
+  "activityData.toolbar.allMonths": "전체 월",
+  "activityData.toolbar.selectMonth": "날짜 선택",
+  "activityData.toolbar.allSources": "전체 배출원",
+  "activityData.toolbar.period": "기간",
+  "activityData.toolbar.refresh": "새로고침",
+  "activityData.monthPicker.title": "월 선택",
+  "activityData.monthPicker.year": "년",
+  "activityData.monthPicker.month": "월",
+  "activityData.monthPicker.apply": "적용",
+  "activityData.loading": "활동 데이터를 불러오는 중입니다.",
+  "activityData.error": "데이터를 불러오지 못했습니다. 다시 시도해 주세요.",
+  "activityData.kpi.recordCount": "레코드 수",
+  "activityData.kpi.recordCountDesc": "필터 조건에 해당하는 행 수",
+  "activityData.kpi.totalEmissions": "합계 tCO2e",
+  "activityData.kpi.totalEmissionsDesc": "선택 조건 누적 배출량",
+  "activityData.kpi.sourceCount": "배출원 수",
+  "activityData.kpi.sourceCountDesc": "포함된 배출원 종류",
+  "activityData.kpi.monthlyAvg": "월평균",
+  "activityData.kpi.monthlyAvgDesc": "월별 평균 tCO2e",
+  "activityData.table.title": "활동 데이터",
+  "activityData.table.description":
+    "회사별 월·배출원 단위 tCO2e 원시 데이터입니다.",
+  "activityData.table.month": "월",
+  "activityData.table.source": "배출원",
+  "activityData.table.scope": "Scope",
+  "activityData.table.emissions": "tCO2e",
+  "activityData.table.empty": "조건에 맞는 활동 데이터가 없습니다.",
+  "activityData.pagination.previous": "이전",
+  "activityData.pagination.next": "다음",
+  "activityData.pagination.summary": "총 {{total}}개 중 {{from}}-{{to}}",
 };
 
 const en: Messages = {
@@ -410,6 +479,41 @@ const en: Messages = {
   "companies.pagination.previous": "Previous",
   "companies.pagination.next": "Next",
   "companies.pagination.summary": "{{from}}-{{to}} of {{total}}",
+  "activityData.toolbar.company": "Company",
+  "activityData.toolbar.country": "Country",
+  "activityData.toolbar.noCompany": "No companies in this country",
+  "activityData.toolbar.month": "Month",
+  "activityData.toolbar.source": "Source",
+  "activityData.toolbar.allMonths": "All months",
+  "activityData.toolbar.selectMonth": "Select date",
+  "activityData.toolbar.allSources": "All sources",
+  "activityData.toolbar.period": "Period",
+  "activityData.toolbar.refresh": "Refresh",
+  "activityData.monthPicker.title": "Select month",
+  "activityData.monthPicker.year": "Year",
+  "activityData.monthPicker.month": "Month",
+  "activityData.monthPicker.apply": "Apply",
+  "activityData.loading": "Loading activity data...",
+  "activityData.error": "Failed to load data. Please try again.",
+  "activityData.kpi.recordCount": "Records",
+  "activityData.kpi.recordCountDesc": "Rows matching current filters",
+  "activityData.kpi.totalEmissions": "Total tCO2e",
+  "activityData.kpi.totalEmissionsDesc": "Cumulative emissions in selection",
+  "activityData.kpi.sourceCount": "Sources",
+  "activityData.kpi.sourceCountDesc": "Distinct emission sources",
+  "activityData.kpi.monthlyAvg": "Monthly average",
+  "activityData.kpi.monthlyAvgDesc": "Average tCO2e per month",
+  "activityData.table.title": "Activity data",
+  "activityData.table.description":
+    "Raw monthly tCO2e records by company and emission source.",
+  "activityData.table.month": "Month",
+  "activityData.table.source": "Source",
+  "activityData.table.scope": "Scope",
+  "activityData.table.emissions": "tCO2e",
+  "activityData.table.empty": "No activity data matches the filters.",
+  "activityData.pagination.previous": "Previous",
+  "activityData.pagination.next": "Next",
+  "activityData.pagination.summary": "{{from}}-{{to}} of {{total}}",
 };
 
 export const MESSAGES: Record<Locale, Messages> = {
