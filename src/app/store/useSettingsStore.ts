@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 import type { Locale, Theme } from "@/app/constants/i18n";
+import { SETTINGS_STORAGE_KEY } from "@/app/utils/theme";
 
 type SettingsState = {
   theme: Theme;
@@ -25,7 +26,8 @@ export const useSettingsStore = create<SettingsState>()(
         set({ locale: get().locale === "ko" ? "en" : "ko" }),
     }),
     {
-      name: "hana-loop-settings",
+      name: SETTINGS_STORAGE_KEY,
+      skipHydration: true,
     },
   ),
 );

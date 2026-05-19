@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { pretendard } from "@/fonts/pretendard";
 import "./globals.css";
 import { Geist } from "next/font/google";
@@ -20,6 +21,7 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
+      suppressHydrationWarning
       className={cn(
         "h-dvh",
         "antialiased",
@@ -34,6 +36,7 @@ export default function RootLayout({
           "flex h-dvh flex-col font-sans",
         )}
       >
+        <Script src="/theme-init.js" strategy="beforeInteractive" />
         <Providers>{children}</Providers>
       </body>
     </html>

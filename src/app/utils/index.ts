@@ -1,5 +1,10 @@
 export { default as cn } from "./cn";
 export {
+  applyThemeClass,
+  getSystemTheme,
+  SETTINGS_STORAGE_KEY,
+} from "./theme";
+export {
   computeCompaniesPortfolioMetrics,
   filterCompaniesByCountry,
   type CompaniesPortfolioMetrics,

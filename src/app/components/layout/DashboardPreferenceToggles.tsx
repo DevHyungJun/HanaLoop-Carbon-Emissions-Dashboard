@@ -3,6 +3,7 @@
 import { Languages, Moon, Sun } from "lucide-react";
 
 import { Button } from "@/app/components/common";
+import { useSettingsReady } from "@/app/components/state/SettingsProvider";
 import { useTranslation } from "@/app/hooks";
 import { useSettingsStore } from "@/app/store";
 import { cn } from "@/app/utils";
@@ -20,18 +21,26 @@ const DashboardPreferenceToggles = ({
   isSidebarCollapsed,
 }: DashboardPreferenceTogglesProps) => {
   const { locale, t } = useTranslation();
+  const isSettingsReady = useSettingsReady();
   const theme = useSettingsStore((state) => state.theme);
   const toggleTheme = useSettingsStore((state) => state.toggleTheme);
   const toggleLocale = useSettingsStore((state) => state.toggleLocale);
 
+  const displayTheme = isSettingsReady ? theme : "light";
+  const displayLocale = isSettingsReady ? locale : "ko";
+
   const themeLabel =
-    theme === "dark" ? t("settings.themeLight") : t("settings.themeDark");
+    displayTheme === "dark"
+      ? t("settings.themeLight")
+      : t("settings.themeDark");
   const localeLabel =
-    locale === "ko" ? t("settings.localeEn") : t("settings.localeKo");
+    displayLocale === "ko" ? t("settings.localeEn") : t("settings.localeKo");
   const currentThemeLabel =
-    theme === "dark" ? t("settings.themeDark") : t("settings.themeLight");
+    displayTheme === "dark"
+      ? t("settings.themeDark")
+      : t("settings.themeLight");
   const currentLocaleLabel =
-    locale === "ko" ? t("settings.localeKo") : t("settings.localeEn");
+    displayLocale === "ko" ? t("settings.localeKo") : t("settings.localeEn");
 
   const themeButton = (
     <Button
@@ -46,7 +55,7 @@ const DashboardPreferenceToggles = ({
         getSidebarIconButtonStateClass(false),
       )}
     >
-      {theme === "dark" ? (
+      {displayTheme === "dark" ? (
         <Moon className="size-4" aria-hidden />
       ) : (
         <Sun className="size-4" aria-hidden />
@@ -70,7 +79,7 @@ const DashboardPreferenceToggles = ({
     >
       <Languages className="size-4" aria-hidden />
       <span className="absolute -top-1 -right-1 rounded-full border border-border bg-background px-1 text-[10px] font-semibold leading-none text-foreground">
-        {locale === "ko" ? "KO" : "EN"}
+        {displayLocale === "ko" ? "KO" : "EN"}
       </span>
     </Button>
   );
