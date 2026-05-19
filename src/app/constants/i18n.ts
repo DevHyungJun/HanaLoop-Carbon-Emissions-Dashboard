@@ -53,7 +53,48 @@ export type MessageKey =
   | "overview.workflow.step3.description"
   | "overview.unit.title"
   | "overview.unit.description"
-  | "overview.quickLinks.title";
+  | "overview.quickLinks.title"
+  | "pcf.toolbar.company"
+  | "pcf.toolbar.period"
+  | "pcf.toolbar.refresh"
+  | "pcf.loading"
+  | "pcf.error"
+  | "pcf.kpi.total"
+  | "pcf.kpi.totalDesc"
+  | "pcf.kpi.monthlyAvg"
+  | "pcf.kpi.monthlyAvgDesc"
+  | "pcf.kpi.topSource"
+  | "pcf.kpi.topSourceDesc"
+  | "pcf.kpi.monthOverMonth"
+  | "pcf.kpi.monthOverMonthDesc"
+  | "pcf.chart.monthlyTrend"
+  | "pcf.chart.monthlyTrendDesc"
+  | "pcf.chart.scopeBreakdown"
+  | "pcf.chart.scopeBreakdownDesc"
+  | "pcf.chart.sourceBreakdown"
+  | "pcf.chart.sourceBreakdownDesc"
+  | "pcf.chart.total"
+  | "pcf.scope.scope1"
+  | "pcf.scope.scope2"
+  | "pcf.scope.scope3"
+  | "pcf.source.gasoline"
+  | "pcf.source.diesel"
+  | "pcf.source.lpg"
+  | "pcf.source.naturalGas"
+  | "pcf.source.electricity"
+  | "pcf.post.title"
+  | "pcf.post.description"
+  | "pcf.post.empty"
+  | "pcf.post.add"
+  | "pcf.post.edit"
+  | "pcf.post.save"
+  | "pcf.post.cancel"
+  | "pcf.post.fieldTitle"
+  | "pcf.post.fieldMonth"
+  | "pcf.post.fieldContent"
+  | "pcf.post.saveSuccess"
+  | "pcf.post.saveError"
+  | "pcf.unit";
 
 type Messages = Record<MessageKey, string>;
 
@@ -121,6 +162,48 @@ const ko: Messages = {
   "overview.unit.description":
     "tCO2e(CO₂ equivalent)는 메탄·아산화질소 등 다양한 온실가스를 CO₂ 기준으로 환산한 톤 단위입니다. 대시보드의 모든 배출량은 tCO2e로 통일해 표시합니다.",
   "overview.quickLinks.title": "바로가기",
+  "pcf.toolbar.company": "회사",
+  "pcf.toolbar.period": "기간",
+  "pcf.toolbar.refresh": "새로고침",
+  "pcf.loading": "PCF 데이터를 불러오는 중입니다.",
+  "pcf.error": "데이터를 불러오지 못했습니다. 다시 시도해 주세요.",
+  "pcf.kpi.total": "총 PCF",
+  "pcf.kpi.totalDesc": "선택 기간 누적 배출량",
+  "pcf.kpi.monthlyAvg": "월평균",
+  "pcf.kpi.monthlyAvgDesc": "월별 평균 tCO2e",
+  "pcf.kpi.topSource": "주요 배출원",
+  "pcf.kpi.topSourceDesc": "기간 내 최대 비중 배출원",
+  "pcf.kpi.monthOverMonth": "전월 대비",
+  "pcf.kpi.monthOverMonthDesc": "최근 월 대비 변화율",
+  "pcf.chart.monthlyTrend": "월별 배출 추이",
+  "pcf.chart.monthlyTrendDesc": "Scope별 월간 tCO2e 변화",
+  "pcf.chart.scopeBreakdown": "Scope 구성",
+  "pcf.chart.scopeBreakdownDesc": "GHG Protocol Scope별 비중",
+  "pcf.chart.sourceBreakdown": "배출원별 배출량",
+  "pcf.chart.sourceBreakdownDesc": "연료·전력 등 배출원별 tCO2e",
+  "pcf.chart.total": "합계",
+  "pcf.scope.scope1": "Scope 1",
+  "pcf.scope.scope2": "Scope 2",
+  "pcf.scope.scope3": "Scope 3",
+  "pcf.source.gasoline": "휘발유",
+  "pcf.source.diesel": "경유",
+  "pcf.source.lpg": "LPG",
+  "pcf.source.naturalGas": "천연가스",
+  "pcf.source.electricity": "전력",
+  "pcf.post.title": "감축 메모",
+  "pcf.post.description":
+    "감축 계획과 실행 메모를 기록합니다. 저장 실패 시 자동으로 롤백됩니다.",
+  "pcf.post.empty": "등록된 감축 메모가 없습니다.",
+  "pcf.post.add": "메모 추가",
+  "pcf.post.edit": "수정",
+  "pcf.post.save": "저장",
+  "pcf.post.cancel": "취소",
+  "pcf.post.fieldTitle": "제목",
+  "pcf.post.fieldMonth": "대상 월",
+  "pcf.post.fieldContent": "내용",
+  "pcf.post.saveSuccess": "감축 메모가 저장되었습니다.",
+  "pcf.post.saveError": "저장에 실패했습니다. 변경 사항을 되돌렸습니다.",
+  "pcf.unit": "tCO2e",
 };
 
 const en: Messages = {
@@ -189,6 +272,48 @@ const en: Messages = {
   "overview.unit.description":
     "tCO2e (CO₂ equivalent) converts various greenhouse gases such as methane and nitrous oxide into a CO₂ basis, measured in metric tons. All emissions in this dashboard are shown in tCO2e.",
   "overview.quickLinks.title": "Quick links",
+  "pcf.toolbar.company": "Company",
+  "pcf.toolbar.period": "Period",
+  "pcf.toolbar.refresh": "Refresh",
+  "pcf.loading": "Loading PCF data...",
+  "pcf.error": "Failed to load data. Please try again.",
+  "pcf.kpi.total": "Total PCF",
+  "pcf.kpi.totalDesc": "Cumulative emissions in selected period",
+  "pcf.kpi.monthlyAvg": "Monthly average",
+  "pcf.kpi.monthlyAvgDesc": "Average tCO2e per month",
+  "pcf.kpi.topSource": "Top source",
+  "pcf.kpi.topSourceDesc": "Highest-share emission source",
+  "pcf.kpi.monthOverMonth": "Month over month",
+  "pcf.kpi.monthOverMonthDesc": "Change vs. previous month",
+  "pcf.chart.monthlyTrend": "Monthly trend",
+  "pcf.chart.monthlyTrendDesc": "Monthly tCO2e by Scope",
+  "pcf.chart.scopeBreakdown": "Scope breakdown",
+  "pcf.chart.scopeBreakdownDesc": "Share by GHG Protocol Scope",
+  "pcf.chart.sourceBreakdown": "Emissions by source",
+  "pcf.chart.sourceBreakdownDesc": "tCO2e by fuel, electricity, etc.",
+  "pcf.chart.total": "Total",
+  "pcf.scope.scope1": "Scope 1",
+  "pcf.scope.scope2": "Scope 2",
+  "pcf.scope.scope3": "Scope 3",
+  "pcf.source.gasoline": "Gasoline",
+  "pcf.source.diesel": "Diesel",
+  "pcf.source.lpg": "LPG",
+  "pcf.source.naturalGas": "Natural gas",
+  "pcf.source.electricity": "Electricity",
+  "pcf.post.title": "Reduction notes",
+  "pcf.post.description":
+    "Record reduction plans and actions. Changes roll back automatically on save failure.",
+  "pcf.post.empty": "No reduction notes yet.",
+  "pcf.post.add": "Add note",
+  "pcf.post.edit": "Edit",
+  "pcf.post.save": "Save",
+  "pcf.post.cancel": "Cancel",
+  "pcf.post.fieldTitle": "Title",
+  "pcf.post.fieldMonth": "Target month",
+  "pcf.post.fieldContent": "Content",
+  "pcf.post.saveSuccess": "Reduction note saved.",
+  "pcf.post.saveError": "Save failed. Your changes were rolled back.",
+  "pcf.unit": "tCO2e",
 };
 
 export const MESSAGES: Record<Locale, Messages> = {

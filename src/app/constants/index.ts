@@ -29,4 +29,15 @@ export {
   OVERVIEW_WORKFLOW_STEPS,
 } from "./overview";
 
+export {
+  EMISSION_SCOPES,
+  EMISSION_SOURCE_LABEL_KEYS,
+  EMISSION_SOURCE_SCOPE,
+  EMISSION_SOURCES,
+  EMISSION_SCOPE_LABEL_KEYS,
+  PCF_CHART_CONFIG,
+  type EmissionScope,
+  type EmissionSource,
+} from "./pcf";
+
 export * from "./button";
