@@ -22,6 +22,8 @@ import { useTranslation } from "@/app/hooks";
 import type { EmissionFactor } from "@/app/types/emission-factor";
 import { formatEmissionFactorValue } from "@/app/utils";
 
+import EmissionFactorsMobileTabList from "./EmissionFactorsMobileTabList";
+
 type EmissionFactorsTableProps = {
   factors: EmissionFactor[];
   getRegionLabel: (region: string) => string;
@@ -98,6 +100,19 @@ const EmissionFactorsTable = ({
   const getUnitLabel = (unit: string) =>
     t("emissionFactors.unitLabel").replace("{{unit}}", unit);
 
+  const fieldLabels = {
+    region: t("emissionFactors.table.region"),
+    unit: t("emissionFactors.table.unit"),
+    standard: t("emissionFactors.table.standard"),
+    formula: t("emissionFactors.table.formula"),
+  };
+
+  const getFactorDisplay = (factor: EmissionFactor) =>
+    `${formatEmissionFactorValue(factor.factor)} ${getUnitLabel(factor.unit)}`;
+
+  const getFormulaDisplay = (factor: EmissionFactor) =>
+    `1 ${factor.unit} × ${formatEmissionFactorValue(factor.factor)}`;
+
   return (
     <Card>
       <CardHeader>
@@ -111,7 +126,18 @@ const EmissionFactorsTable = ({
           </p>
         ) : (
           <>
-            <div className="overflow-x-auto">
+            <EmissionFactorsMobileTabList
+              factors={paginatedFactors}
+              tabListLabel={t("emissionFactors.table.title")}
+              getSourceLabel={getSourceLabel}
+              getScopeLabel={getScopeLabel}
+              getRegionDisplay={getRegionDisplay}
+              getFactorDisplay={getFactorDisplay}
+              getFormulaDisplay={getFormulaDisplay}
+              fieldLabels={fieldLabels}
+            />
+
+            <div className="hidden overflow-x-auto md:block">
               <table className="w-full min-w-[760px] text-sm">
                 <thead>
                   <tr className="border-b border-border text-left text-muted-foreground">
@@ -166,7 +192,7 @@ const EmissionFactorsTable = ({
                         {factor.standard}
                       </td>
                       <td className="px-3 py-3 font-mono text-xs text-muted-foreground">
-                        1 {factor.unit} × {formatEmissionFactorValue(factor.factor)}
+                        {getFormulaDisplay(factor)}
                       </td>
                     </tr>
                   ))}
