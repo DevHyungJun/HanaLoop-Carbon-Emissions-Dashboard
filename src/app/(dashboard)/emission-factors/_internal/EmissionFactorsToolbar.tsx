@@ -10,6 +10,8 @@ import {
   EMISSION_SOURCES,
   EMISSION_SCOPE_LABEL_KEYS,
   EMISSION_SOURCE_LABEL_KEYS,
+  TOOLBAR_REFRESH_BUTTON_CLASS,
+  TOOLBAR_SELECT_CLASS,
   type EmissionScope,
   type EmissionSource,
 } from "@/app/constants";
@@ -44,7 +46,7 @@ const EmissionFactorsToolbar = ({
           <select
             value={selectedScope}
             onChange={(event) => onScopeChange(event.target.value)}
-            className="h-9 rounded-lg border border-border bg-background px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+            className={TOOLBAR_SELECT_CLASS}
           >
             <option value={ALL_SCOPES_FILTER}>
               {t("emissionFactors.toolbar.allScopes")}
@@ -66,7 +68,7 @@ const EmissionFactorsToolbar = ({
           <select
             value={selectedSource}
             onChange={(event) => onSourceChange(event.target.value)}
-            className="h-9 rounded-lg border border-border bg-background px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+            className={TOOLBAR_SELECT_CLASS}
           >
             <option value={ALL_EMISSION_FACTOR_SOURCES_FILTER}>
               {t("emissionFactors.toolbar.allSources")}
@@ -94,7 +96,7 @@ const EmissionFactorsToolbar = ({
         variant="outline"
         onClick={onRefresh}
         isLoading={isRefreshing}
-        className="sm:self-end"
+        className={`${TOOLBAR_REFRESH_BUTTON_CLASS} sm:self-end`}
       >
         <RefreshCw className="size-4" aria-hidden />
         {t("emissionFactors.toolbar.refresh")}

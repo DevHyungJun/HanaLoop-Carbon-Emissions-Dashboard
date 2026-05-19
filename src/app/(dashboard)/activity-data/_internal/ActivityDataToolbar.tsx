@@ -7,6 +7,8 @@ import {
   ALL_SOURCES_FILTER,
   EMISSION_SOURCES,
   EMISSION_SOURCE_LABEL_KEYS,
+  TOOLBAR_REFRESH_BUTTON_CLASS,
+  TOOLBAR_SELECT_CLASS,
   type EmissionSource,
 } from "@/app/constants";
 import { useCountryName, useTranslation } from "@/app/hooks";
@@ -59,7 +61,7 @@ const ActivityDataToolbar = ({
             <select
               value={selectedCountryCode}
               onChange={(event) => onCountryChange(event.target.value)}
-              className="h-9 rounded-lg border border-border bg-background px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+              className={TOOLBAR_SELECT_CLASS}
             >
               {countries.map((country) => (
                 <option key={country.code} value={country.code}>
@@ -77,7 +79,7 @@ const ActivityDataToolbar = ({
               value={selectedCompanyId}
               onChange={(event) => onCompanyChange(event.target.value)}
               disabled={!hasCompanies}
-              className="h-9 rounded-lg border border-border bg-background px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50"
+              className={TOOLBAR_SELECT_CLASS}
             >
               {!hasCompanies ? (
                 <option value="">{t("activityData.toolbar.noCompany")}</option>
@@ -98,7 +100,7 @@ const ActivityDataToolbar = ({
             <select
               value={selectedSource}
               onChange={(event) => onSourceChange(event.target.value)}
-              className="h-9 rounded-lg border border-border bg-background px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+              className={TOOLBAR_SELECT_CLASS}
             >
               <option value={ALL_SOURCES_FILTER}>
                 {t("activityData.toolbar.allSources")}
@@ -122,7 +124,7 @@ const ActivityDataToolbar = ({
           variant="outline"
           onClick={onRefresh}
           isLoading={isRefreshing}
-          className="lg:self-end"
+          className={`${TOOLBAR_REFRESH_BUTTON_CLASS} lg:self-end`}
         >
           <RefreshCw className="size-4" aria-hidden />
           {t("activityData.toolbar.refresh")}

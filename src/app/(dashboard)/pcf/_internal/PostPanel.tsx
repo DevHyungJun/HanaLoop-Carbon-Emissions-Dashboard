@@ -1,11 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Pencil, Plus } from "lucide-react";
 
-import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/common";
+import {
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/app/components/common";
 import { useToast } from "@/app/components/state";
-import { DEFAULT_DATE_RANGE } from "@/app/constants";
+import {
+  DEFAULT_DATE_RANGE,
+  TOOLBAR_ICON_TEXT_BUTTON_CLASS,
+  TOOLBAR_INPUT_CLASS,
+  TOOLBAR_SELECT_CLASS,
+} from "@/app/constants";
 import { useTranslation } from "@/app/hooks";
 import {
   createOrUpdatePost,
@@ -37,6 +49,15 @@ const PostPanel = ({ posts, companyId, onPostsChange }: PostPanelProps) => {
   const { toast } = useToast();
   const [form, setForm] = useState<PostFormState | null>(null);
   const [savingPostId, setSavingPostId] = useState<string | null>(null);
+  const titleInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!form) {
+      return;
+    }
+
+    titleInputRef.current?.focus();
+  }, [form]);
 
   const openCreateForm = () => {
     setForm({ ...EMPTY_FORM, dateTime: DEFAULT_DATE_RANGE.to });
@@ -118,7 +139,12 @@ const PostPanel = ({ posts, companyId, onPostsChange }: PostPanelProps) => {
           <CardTitle>{t("pcf.post.title")}</CardTitle>
           <CardDescription>{t("pcf.post.description")}</CardDescription>
         </div>
-        <Button type="button" size="sm" onClick={openCreateForm}>
+        <Button
+          type="button"
+          size="sm"
+          className={TOOLBAR_ICON_TEXT_BUTTON_CLASS}
+          onClick={openCreateForm}
+        >
           <Plus className="size-4" aria-hidden />
           {t("pcf.post.add")}
         </Button>
@@ -129,13 +155,16 @@ const PostPanel = ({ posts, companyId, onPostsChange }: PostPanelProps) => {
             <label className="grid gap-1.5 text-sm">
               <span className="font-medium">{t("pcf.post.fieldTitle")}</span>
               <input
+                ref={titleInputRef}
                 value={form.title}
                 onChange={(event) =>
                   setForm((current) =>
-                    current ? { ...current, title: event.target.value } : current,
+                    current
+                      ? { ...current, title: event.target.value }
+                      : current,
                   )
                 }
-                className="h-9 rounded-lg border border-border bg-background px-3 outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+                className={TOOLBAR_INPUT_CLASS}
               />
             </label>
 
@@ -151,7 +180,7 @@ const PostPanel = ({ posts, companyId, onPostsChange }: PostPanelProps) => {
                       : current,
                   )
                 }
-                className="h-9 rounded-lg border border-border bg-background px-3 outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+                className={TOOLBAR_SELECT_CLASS}
               />
             </label>
 
@@ -202,6 +231,7 @@ const PostPanel = ({ posts, companyId, onPostsChange }: PostPanelProps) => {
                     type="button"
                     variant="ghost"
                     size="sm"
+                    className={TOOLBAR_ICON_TEXT_BUTTON_CLASS}
                     onClick={() => openEditForm(post)}
                     disabled={savingPostId === post.id}
                   >

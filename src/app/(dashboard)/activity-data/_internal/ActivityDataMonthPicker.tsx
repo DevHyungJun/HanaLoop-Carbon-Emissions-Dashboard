@@ -77,7 +77,9 @@ const ActivityDataMonthPicker = ({
 
     const monthsForYear = getActivityDataMonthsForYear(draftYear);
 
-    if (monthsForYear.some((yearMonth) => yearMonth.endsWith(`-${draftMonth}`))) {
+    if (
+      monthsForYear.some((yearMonth) => yearMonth.endsWith(`-${draftMonth}`))
+    ) {
       return;
     }
 
@@ -110,7 +112,7 @@ const ActivityDataMonthPicker = ({
         <button
           type="button"
           onClick={openSheet}
-          className="flex h-9 w-full items-center justify-between gap-2 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none transition-colors hover:bg-muted/40 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+          className="flex h-9 w-full cursor-pointer items-center justify-between gap-3 rounded-lg border border-border bg-background pl-3 pr-3.5 text-sm text-foreground outline-none transition-colors hover:bg-muted/40 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
         >
           <span className="truncate text-left">{selectedLabel}</span>
           <CalendarDays

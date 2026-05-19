@@ -3,7 +3,11 @@
 import { RefreshCw } from "lucide-react";
 
 import { Button } from "@/app/components/common";
-import { ALL_COUNTRIES_FILTER } from "@/app/constants";
+import {
+  ALL_COUNTRIES_FILTER,
+  TOOLBAR_REFRESH_BUTTON_CLASS,
+  TOOLBAR_SELECT_CLASS,
+} from "@/app/constants";
 import { useCountryName, useTranslation } from "@/app/hooks";
 import type { Country } from "@/app/types/country";
 
@@ -34,7 +38,7 @@ const CompaniesToolbar = ({
         <select
           value={selectedCountryCode}
           onChange={(event) => onCountryChange(event.target.value)}
-          className="h-9 rounded-lg border border-border bg-background px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+          className={TOOLBAR_SELECT_CLASS}
         >
           <option value={ALL_COUNTRIES_FILTER}>
             {t("companies.toolbar.allCountries")}
@@ -52,7 +56,7 @@ const CompaniesToolbar = ({
         variant="outline"
         onClick={onRefresh}
         isLoading={isRefreshing}
-        className="sm:self-end"
+        className={`${TOOLBAR_REFRESH_BUTTON_CLASS} sm:self-end`}
       >
         <RefreshCw className="size-4" aria-hidden />
         {t("companies.toolbar.refresh")}

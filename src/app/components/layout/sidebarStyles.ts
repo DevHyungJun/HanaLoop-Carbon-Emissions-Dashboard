@@ -1,6 +1,7 @@
 import { cn } from "@/app/utils";
 
-export const SIDEBAR_ICON_BUTTON_CLASS = "size-10 shrink-0 p-0";
+export const SIDEBAR_ICON_BUTTON_CLASS =
+  "size-10 shrink-0 cursor-pointer p-0";
 
 export const getSidebarIconButtonStateClass = (isActive: boolean) =>
   cn(

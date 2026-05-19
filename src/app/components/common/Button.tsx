@@ -38,22 +38,19 @@ const Button = ({
       )}
       {...props}
     >
-      <span
-        className={cn(
-          "inline-flex items-center justify-center gap-inherit",
-          isLoading && "invisible",
-        )}
-      >
-        {children}
-      </span>
       {isLoading ? (
-        <span className="absolute inset-0 inline-flex items-center justify-center">
-          <Loader2
-            className={cn("animate-spin", spinnerSizeClassName[resolvedSize])}
-            aria-hidden
-          />
-        </span>
-      ) : null}
+        <>
+          <span className="invisible inline-flex items-center">{children}</span>
+          <span className="absolute inset-0 inline-flex items-center justify-center">
+            <Loader2
+              className={cn("animate-spin", spinnerSizeClassName[resolvedSize])}
+              aria-hidden
+            />
+          </span>
+        </>
+      ) : (
+        children
+      )}
     </ButtonPrimitive>
   );
 };

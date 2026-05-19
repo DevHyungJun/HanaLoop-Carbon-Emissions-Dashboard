@@ -41,7 +41,7 @@ const NavLink = ({
       title={isSidebarCollapsed ? label : undefined}
       aria-label={label}
       className={cn(
-        "flex items-center rounded-lg border text-sm transition-colors",
+        "flex cursor-pointer items-center rounded-lg border text-sm transition-colors",
         isSidebarCollapsed
           ? cn(
               "justify-center gap-0",
