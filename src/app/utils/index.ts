@@ -28,3 +28,10 @@ export {
   type ActivityDataRow,
   type ActivityDataSummary,
 } from "./activity-data";
+export {
+  computeEmissionFactorsSummary,
+  filterEmissionFactors,
+  formatEmissionFactorValue,
+  getEmissionFactorScopeCounts,
+  type EmissionFactorsSummary,
+} from "./emission-factors";

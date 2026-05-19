@@ -1,6 +1,8 @@
 import { MOCK_COMPANIES, MOCK_COUNTRIES, MOCK_POSTS } from "@/app/mock/data";
+import { EMISSION_FACTOR_DEFINITIONS } from "@/app/constants/emission-factors";
 import type { Company } from "@/app/types/company";
 import type { Country } from "@/app/types/country";
+import type { EmissionFactor } from "@/app/types/emission-factor";
 import type { Post } from "@/app/types/post";
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
@@ -20,6 +22,10 @@ export const fetchCountries = async (): Promise<Country[]> => {
 
 export const fetchCompanies = async (): Promise<Company[]> => {
   return withDelay(() => structuredClone(MOCK_COMPANIES));
+};
+
+export const fetchEmissionFactors = async (): Promise<EmissionFactor[]> => {
+  return withDelay(() => structuredClone(EMISSION_FACTOR_DEFINITIONS));
 };
 
 export const fetchPosts = async (): Promise<Post[]> => {

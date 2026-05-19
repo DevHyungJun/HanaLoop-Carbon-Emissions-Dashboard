@@ -160,7 +160,39 @@ export type MessageKey =
   | "activityData.table.empty"
   | "activityData.pagination.previous"
   | "activityData.pagination.next"
-  | "activityData.pagination.summary";
+  | "activityData.pagination.summary"
+  | "emissionFactors.toolbar.scope"
+  | "emissionFactors.toolbar.source"
+  | "emissionFactors.toolbar.allScopes"
+  | "emissionFactors.toolbar.allSources"
+  | "emissionFactors.toolbar.formula"
+  | "emissionFactors.toolbar.refresh"
+  | "emissionFactors.loading"
+  | "emissionFactors.error"
+  | "emissionFactors.kpi.totalCount"
+  | "emissionFactors.kpi.totalCountDesc"
+  | "emissionFactors.kpi.scope1Count"
+  | "emissionFactors.kpi.scope1CountDesc"
+  | "emissionFactors.kpi.scope2Count"
+  | "emissionFactors.kpi.scope2CountDesc"
+  | "emissionFactors.kpi.latestUpdate"
+  | "emissionFactors.kpi.latestUpdateDesc"
+  | "emissionFactors.table.title"
+  | "emissionFactors.table.description"
+  | "emissionFactors.table.source"
+  | "emissionFactors.table.scope"
+  | "emissionFactors.table.region"
+  | "emissionFactors.table.unit"
+  | "emissionFactors.table.factor"
+  | "emissionFactors.table.standard"
+  | "emissionFactors.table.formula"
+  | "emissionFactors.table.empty"
+  | "emissionFactors.chart.scopeDistribution"
+  | "emissionFactors.chart.scopeDistributionDesc"
+  | "emissionFactors.chart.electricityComparison"
+  | "emissionFactors.chart.electricityComparisonDesc"
+  | "emissionFactors.region.global"
+  | "emissionFactors.unitLabel";
 
 type Messages = Record<MessageKey, string>;
 
@@ -337,6 +369,39 @@ const ko: Messages = {
   "activityData.pagination.previous": "이전",
   "activityData.pagination.next": "다음",
   "activityData.pagination.summary": "총 {{total}}개 중 {{from}}-{{to}}",
+  "emissionFactors.toolbar.scope": "Scope",
+  "emissionFactors.toolbar.source": "배출원",
+  "emissionFactors.toolbar.allScopes": "전체 Scope",
+  "emissionFactors.toolbar.allSources": "전체 배출원",
+  "emissionFactors.toolbar.formula": "산출식",
+  "emissionFactors.toolbar.refresh": "새로고침",
+  "emissionFactors.loading": "배출 계수를 불러오는 중입니다.",
+  "emissionFactors.error": "데이터를 불러오지 못했습니다. 다시 시도해 주세요.",
+  "emissionFactors.kpi.totalCount": "등록 계수",
+  "emissionFactors.kpi.totalCountDesc": "필터 조건에 해당하는 배출 계수 수",
+  "emissionFactors.kpi.scope1Count": "Scope 1",
+  "emissionFactors.kpi.scope1CountDesc": "직접 배출 관련 계수",
+  "emissionFactors.kpi.scope2Count": "Scope 2",
+  "emissionFactors.kpi.scope2CountDesc": "에너지 간접 배출 계수",
+  "emissionFactors.kpi.latestUpdate": "최신 적용",
+  "emissionFactors.kpi.latestUpdateDesc": "가장 최근 effective from",
+  "emissionFactors.table.title": "배출 계수 목록",
+  "emissionFactors.table.description":
+    "활동량 × 배출 계수 = tCO2e 변환에 사용되는 기준값입니다.",
+  "emissionFactors.table.source": "배출원",
+  "emissionFactors.table.scope": "Scope",
+  "emissionFactors.table.region": "지역",
+  "emissionFactors.table.unit": "단위",
+  "emissionFactors.table.factor": "배출 계수",
+  "emissionFactors.table.standard": "기준",
+  "emissionFactors.table.formula": "산출식",
+  "emissionFactors.table.empty": "조건에 맞는 배출 계수가 없습니다.",
+  "emissionFactors.chart.scopeDistribution": "Scope별 계수 분포",
+  "emissionFactors.chart.scopeDistributionDesc": "필터 조건 내 Scope별 등록 수",
+  "emissionFactors.chart.electricityComparison": "전력 배출 계수 비교",
+  "emissionFactors.chart.electricityComparisonDesc": "국가별 electricity tCO2e/kWh",
+  "emissionFactors.region.global": "글로벌",
+  "emissionFactors.unitLabel": "tCO2e/{{unit}}",
 };
 
 const en: Messages = {
@@ -514,6 +579,39 @@ const en: Messages = {
   "activityData.pagination.previous": "Previous",
   "activityData.pagination.next": "Next",
   "activityData.pagination.summary": "{{from}}-{{to}} of {{total}}",
+  "emissionFactors.toolbar.scope": "Scope",
+  "emissionFactors.toolbar.source": "Source",
+  "emissionFactors.toolbar.allScopes": "All scopes",
+  "emissionFactors.toolbar.allSources": "All sources",
+  "emissionFactors.toolbar.formula": "Formula",
+  "emissionFactors.toolbar.refresh": "Refresh",
+  "emissionFactors.loading": "Loading emission factors...",
+  "emissionFactors.error": "Failed to load data. Please try again.",
+  "emissionFactors.kpi.totalCount": "Factors",
+  "emissionFactors.kpi.totalCountDesc": "Emission factors matching filters",
+  "emissionFactors.kpi.scope1Count": "Scope 1",
+  "emissionFactors.kpi.scope1CountDesc": "Direct emission factors",
+  "emissionFactors.kpi.scope2Count": "Scope 2",
+  "emissionFactors.kpi.scope2CountDesc": "Energy indirect emission factors",
+  "emissionFactors.kpi.latestUpdate": "Latest effective",
+  "emissionFactors.kpi.latestUpdateDesc": "Most recent effective-from date",
+  "emissionFactors.table.title": "Emission factors",
+  "emissionFactors.table.description":
+    "Reference values used in activity × factor = tCO2e conversion.",
+  "emissionFactors.table.source": "Source",
+  "emissionFactors.table.scope": "Scope",
+  "emissionFactors.table.region": "Region",
+  "emissionFactors.table.unit": "Unit",
+  "emissionFactors.table.factor": "Factor",
+  "emissionFactors.table.standard": "Standard",
+  "emissionFactors.table.formula": "Formula",
+  "emissionFactors.table.empty": "No emission factors match the filters.",
+  "emissionFactors.chart.scopeDistribution": "Factors by scope",
+  "emissionFactors.chart.scopeDistributionDesc": "Registered factors per scope",
+  "emissionFactors.chart.electricityComparison": "Electricity factor comparison",
+  "emissionFactors.chart.electricityComparisonDesc": "Country electricity tCO2e/kWh",
+  "emissionFactors.region.global": "Global",
+  "emissionFactors.unitLabel": "tCO2e/{{unit}}",
 };
 
 export const MESSAGES: Record<Locale, Messages> = {

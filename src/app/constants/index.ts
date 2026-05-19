@@ -54,4 +54,11 @@ export {
   ALL_SOURCES_FILTER,
 } from "./activity-data";
 
+export {
+  ALL_EMISSION_FACTOR_SOURCES_FILTER,
+  ALL_SCOPES_FILTER,
+  EMISSION_FACTORS_PAGE_SIZE,
+  EMISSION_FACTOR_DEFINITIONS,
+} from "./emission-factors";
+
 export * from "./button";
