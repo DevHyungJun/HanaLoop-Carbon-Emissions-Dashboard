@@ -5,6 +5,8 @@
 - **대상 사용자:** 실무자(활동 데이터 입력·검증) · 경영자(기간·회사별 PCF 추세·리스크 파악)
 - **과제 목적:** 탄소 도메인 이해, UI 설계·구현, 설계 결정 설명 능력을 보여주는 프론트엔드 채용 과제
 
+<img width="1353" height="896" alt="Image" src="https://github.com/user-attachments/assets/b9f22d5e-1298-43a9-8e26-d9ab6b2d292a" />
+
 ---
 
 ## 실행 방법
