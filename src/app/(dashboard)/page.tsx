@@ -1,5 +1,7 @@
-import { OverviewPage } from "./overview";
+import Overview from "./overview/Overview";
 
-export default function Home() {
-  return <OverviewPage />;
-}
+const Home = () => {
+  return <Overview />;
+};
+
+export default Home;

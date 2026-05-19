@@ -1,6 +1,6 @@
 import { PagePlaceholder } from "@/app/components/layout";
 
-export default function CompaniesPage() {
+const CompaniesPage = () => {
   return (
     <PagePlaceholder
       badge="Analysis"
@@ -8,4 +8,6 @@ export default function CompaniesPage() {
       description="조직 경계별 배출 현황, 국가·계열사 비교, 회사 상세 드릴다운이 제공될 페이지입니다."
     />
   );
-}
+};
+
+export default CompaniesPage;
