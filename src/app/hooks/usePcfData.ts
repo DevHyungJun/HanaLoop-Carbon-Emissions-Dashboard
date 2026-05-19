@@ -4,10 +4,10 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { DEFAULT_DATE_RANGE } from "@/app/constants";
-import { fetchCompanies, fetchCountries, fetchPosts } from "@/app/lib/api";
+import { fetchCompanies, fetchCountries } from "@/app/lib/api";
+import { usePostsStore } from "@/app/store";
 import type { Company } from "@/app/types/company";
 import type { Country } from "@/app/types/country";
-import type { Post } from "@/app/types/post";
 import { computePcfMetrics } from "@/app/utils/emissions";
 
 export const usePcfData = () => {
@@ -15,7 +15,7 @@ export const usePcfData = () => {
   const companyFromUrl = searchParams.get("company");
   const [companies, setCompanies] = useState<Company[]>([]);
   const [countries, setCountries] = useState<Country[]>([]);
-  const [posts, setPosts] = useState<Post[]>([]);
+  const posts = usePostsStore((state) => state.posts);
   const [selectedCountryCode, setSelectedCountryCode] = useState("");
   const [selectedCompanyId, setSelectedCompanyId] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -32,14 +32,12 @@ export const usePcfData = () => {
     setError(null);
 
     try {
-      const [nextCompanies, nextPosts, nextCountries] = await Promise.all([
+      const [nextCompanies, nextCountries] = await Promise.all([
         fetchCompanies(),
-        fetchPosts(),
         fetchCountries(),
       ]);
 
       setCompanies(nextCompanies);
-      setPosts(nextPosts);
       setCountries(nextCountries);
       setSelectedCountryCode((currentCode) => {
         if (
@@ -142,7 +140,6 @@ export const usePcfData = () => {
     selectedCompany,
     metrics,
     companyPosts,
-    setPosts,
     isLoading,
     isRefreshing,
     error,

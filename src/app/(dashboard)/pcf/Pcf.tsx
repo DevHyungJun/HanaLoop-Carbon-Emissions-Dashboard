@@ -1,10 +1,7 @@
 "use client";
 
-import { useCallback } from "react";
-
 import { Button } from "@/app/components/common";
 import { usePcfData, useTranslation } from "@/app/hooks";
-import type { Post } from "@/app/types/post";
 
 import {
   PcfKpiCards,
@@ -25,7 +22,6 @@ const Pcf = () => {
     setSelectedCountryCode,
     selectedCompanyId,
     setSelectedCompanyId,
-    setPosts,
     metrics,
     companyPosts,
     isLoading,
@@ -33,19 +29,6 @@ const Pcf = () => {
     error,
     reload,
   } = usePcfData();
-
-  const handleCompanyPostsChange = useCallback(
-    (nextCompanyPosts: Post[]) => {
-      setPosts((previousPosts) => {
-        const otherCompanyPosts = previousPosts.filter(
-          (post) => post.resourceUid !== selectedCompanyId,
-        );
-
-        return [...otherCompanyPosts, ...nextCompanyPosts];
-      });
-    },
-    [selectedCompanyId, setPosts],
-  );
 
   if (isLoading) {
     return <PcfSkeleton />;
@@ -84,11 +67,7 @@ const Pcf = () => {
         <PcfSourceChart sourceTotals={metrics.sourceTotals} />
       </div>
 
-      <PostPanel
-        posts={companyPosts}
-        companyId={selectedCompanyId}
-        onPostsChange={handleCompanyPostsChange}
-      />
+      <PostPanel posts={companyPosts} companyId={selectedCompanyId} />
     </div>
   );
 };

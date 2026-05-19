@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Pencil } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 
 import { Button } from "@/app/components/common";
 import {
@@ -16,11 +16,13 @@ import { cn, formatActivityMonthLong } from "@/app/utils";
 type PostListItemProps = {
   post: Post;
   locale: Locale;
-  isSaving: boolean;
+  isProcessing: boolean;
   readMoreLabel: string;
   readLessLabel: string;
   editLabel: string;
+  deleteLabel: string;
   onEdit: (post: Post) => void;
+  onDelete: (post: Post) => void;
 };
 
 const isContentExpandable = (content: string) =>
@@ -30,11 +32,13 @@ const isContentExpandable = (content: string) =>
 const PostListItem = ({
   post,
   locale,
-  isSaving,
+  isProcessing,
   readMoreLabel,
   readLessLabel,
   editLabel,
+  deleteLabel,
   onEdit,
+  onDelete,
 }: PostListItemProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const canExpandContent = isContentExpandable(post.content);
@@ -53,17 +57,33 @@ const PostListItem = ({
             {formatActivityMonthLong(post.dateTime, locale)}
           </p>
         </div>
-        <Button
-          type="button"
-          variant="ghost"
-          size="sm"
-          className={cn(TOOLBAR_ICON_TEXT_BUTTON_CLASS, "shrink-0")}
-          onClick={() => onEdit(post)}
-          disabled={isSaving}
-        >
-          <Pencil className="size-4" aria-hidden />
-          {editLabel}
-        </Button>
+        <div className="flex shrink-0 items-center gap-1">
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className={TOOLBAR_ICON_TEXT_BUTTON_CLASS}
+            onClick={() => onEdit(post)}
+            disabled={isProcessing}
+          >
+            <Pencil className="size-4" aria-hidden />
+            {editLabel}
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className={cn(
+              TOOLBAR_ICON_TEXT_BUTTON_CLASS,
+              "text-destructive hover:text-destructive",
+            )}
+            onClick={() => onDelete(post)}
+            disabled={isProcessing}
+          >
+            <Trash2 className="size-4" aria-hidden />
+            {deleteLabel}
+          </Button>
+        </div>
       </div>
 
       <div className="mt-3 min-w-0">

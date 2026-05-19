@@ -94,6 +94,7 @@ export type MessageKey =
   | "pcf.post.empty"
   | "pcf.post.add"
   | "pcf.post.edit"
+  | "pcf.post.delete"
   | "pcf.post.save"
   | "pcf.post.cancel"
   | "pcf.post.fieldTitle"
@@ -104,6 +105,8 @@ export type MessageKey =
   | "pcf.post.charCount"
   | "pcf.post.saveSuccess"
   | "pcf.post.saveError"
+  | "pcf.post.deleteSuccess"
+  | "pcf.post.deleteError"
   | "pcf.unit"
   | "companies.toolbar.country"
   | "companies.toolbar.allCountries"
@@ -218,8 +221,7 @@ const ko: Messages = {
   "nav.sections.data": "데이터",
   "nav.sections.settings": "설정",
   "nav.platformOverview": "플랫폼 소개",
-  "nav.platformOverviewDesc":
-    "PCF 개념과 대시보드 사용 방법을 안내합니다.",
+  "nav.platformOverviewDesc": "PCF 개념과 대시보드 사용 방법을 안내합니다.",
   "nav.pcf": "PCF 계산",
   "nav.pcfDesc": "제품별 탄소 발자국 결과와 KPI·차트를 확인합니다.",
   "nav.companies": "회사",
@@ -306,11 +308,11 @@ const ko: Messages = {
   "pcf.source.naturalGas": "천연가스",
   "pcf.source.electricity": "전력",
   "pcf.post.title": "감축 메모",
-  "pcf.post.description":
-    "감축 계획과 실행 메모를 기록합니다. 저장 실패 시 자동으로 롤백됩니다.",
+  "pcf.post.description": "감축 계획과 실행 메모를 기록합니다.",
   "pcf.post.empty": "등록된 감축 메모가 없습니다.",
   "pcf.post.add": "메모 추가",
   "pcf.post.edit": "수정",
+  "pcf.post.delete": "삭제",
   "pcf.post.save": "저장",
   "pcf.post.cancel": "취소",
   "pcf.post.fieldTitle": "제목",
@@ -321,6 +323,8 @@ const ko: Messages = {
   "pcf.post.charCount": "{{current}}/{{max}}",
   "pcf.post.saveSuccess": "감축 메모가 저장되었습니다.",
   "pcf.post.saveError": "저장에 실패했습니다. 변경 사항을 되돌렸습니다.",
+  "pcf.post.deleteSuccess": "감축 메모가 삭제되었습니다.",
+  "pcf.post.deleteError": "삭제에 실패했습니다. 변경 사항을 되돌렸습니다.",
   "pcf.unit": "tCO2e",
   "companies.toolbar.country": "국가",
   "companies.toolbar.allCountries": "전체 국가",
@@ -349,7 +353,8 @@ const ko: Messages = {
   "companies.table.empty": "표시할 회사가 없습니다.",
   "companies.detail.title": "회사 상세",
   "companies.detail.viewPcf": "PCF 상세 보기",
-  "companies.detail.selectHint": "목록에서 회사를 선택하면 Scope 구성을 확인할 수 있습니다.",
+  "companies.detail.selectHint":
+    "목록에서 회사를 선택하면 Scope 구성을 확인할 수 있습니다.",
   "companies.chart.emissions": "배출량",
   "companies.pagination.previous": "이전",
   "companies.pagination.next": "다음",
@@ -419,7 +424,8 @@ const ko: Messages = {
   "emissionFactors.chart.scopeDistribution": "Scope별 계수 분포",
   "emissionFactors.chart.scopeDistributionDesc": "필터 조건 내 Scope별 등록 수",
   "emissionFactors.chart.electricityComparison": "전력 배출 계수 비교",
-  "emissionFactors.chart.electricityComparisonDesc": "국가별 electricity tCO2e/kWh",
+  "emissionFactors.chart.electricityComparisonDesc":
+    "국가별 electricity tCO2e/kWh",
   "emissionFactors.region.global": "글로벌",
   "emissionFactors.unitLabel": "tCO2e/{{unit}}",
 };
@@ -439,8 +445,7 @@ const en: Messages = {
   "nav.platformOverviewDesc":
     "Learn about PCF concepts and how to use the dashboard.",
   "nav.pcf": "PCF Calculation",
-  "nav.pcfDesc":
-    "View product carbon footprint results, KPIs, and charts.",
+  "nav.pcfDesc": "View product carbon footprint results, KPIs, and charts.",
   "nav.companies": "Companies",
   "nav.companiesDesc":
     "Compare emissions across organizations and subsidiaries.",
@@ -531,6 +536,7 @@ const en: Messages = {
   "pcf.post.empty": "No reduction notes yet.",
   "pcf.post.add": "Add note",
   "pcf.post.edit": "Edit",
+  "pcf.post.delete": "Delete",
   "pcf.post.save": "Save",
   "pcf.post.cancel": "Cancel",
   "pcf.post.fieldTitle": "Title",
@@ -541,6 +547,8 @@ const en: Messages = {
   "pcf.post.charCount": "{{current}}/{{max}}",
   "pcf.post.saveSuccess": "Reduction note saved.",
   "pcf.post.saveError": "Save failed. Your changes were rolled back.",
+  "pcf.post.deleteSuccess": "Reduction note deleted.",
+  "pcf.post.deleteError": "Delete failed. Your changes were rolled back.",
   "pcf.unit": "tCO2e",
   "companies.toolbar.country": "Country",
   "companies.toolbar.allCountries": "All countries",
@@ -569,7 +577,8 @@ const en: Messages = {
   "companies.table.empty": "No companies to display.",
   "companies.detail.title": "Company detail",
   "companies.detail.viewPcf": "View PCF details",
-  "companies.detail.selectHint": "Select a company from the list to view Scope breakdown.",
+  "companies.detail.selectHint":
+    "Select a company from the list to view Scope breakdown.",
   "companies.chart.emissions": "Emissions",
   "companies.pagination.previous": "Previous",
   "companies.pagination.next": "Next",
@@ -638,8 +647,10 @@ const en: Messages = {
   "emissionFactors.table.empty": "No emission factors match the filters.",
   "emissionFactors.chart.scopeDistribution": "Factors by scope",
   "emissionFactors.chart.scopeDistributionDesc": "Registered factors per scope",
-  "emissionFactors.chart.electricityComparison": "Electricity factor comparison",
-  "emissionFactors.chart.electricityComparisonDesc": "Country electricity tCO2e/kWh",
+  "emissionFactors.chart.electricityComparison":
+    "Electricity factor comparison",
+  "emissionFactors.chart.electricityComparisonDesc":
+    "Country electricity tCO2e/kWh",
   "emissionFactors.region.global": "Global",
   "emissionFactors.unitLabel": "tCO2e/{{unit}}",
 };

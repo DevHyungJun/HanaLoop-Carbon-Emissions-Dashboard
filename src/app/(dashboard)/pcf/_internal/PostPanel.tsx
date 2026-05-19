@@ -16,8 +16,10 @@ import { DEFAULT_DATE_RANGE, TOOLBAR_ICON_TEXT_BUTTON_CLASS } from "@/app/consta
 import { useTranslation } from "@/app/hooks";
 import {
   createOrUpdatePost,
+  deletePost as deletePostRequest,
   type CreateOrUpdatePostInput,
 } from "@/app/lib/api";
+import { usePostsStore } from "@/app/store";
 import type { Post } from "@/app/types/post";
 
 import PostForm, { type PostFormState } from "./PostForm";
@@ -26,7 +28,6 @@ import PostListItem from "./PostListItem";
 type PostPanelProps = {
   posts: Post[];
   companyId: string;
-  onPostsChange: (posts: Post[]) => void;
 };
 
 const EMPTY_FORM: PostFormState = {
@@ -35,11 +36,14 @@ const EMPTY_FORM: PostFormState = {
   content: "",
 };
 
-const PostPanel = ({ posts, companyId, onPostsChange }: PostPanelProps) => {
+const PostPanel = ({ posts, companyId }: PostPanelProps) => {
   const { locale, t } = useTranslation();
   const { toast } = useToast();
+  const upsertPost = usePostsStore((state) => state.upsertPost);
+  const deletePostFromStore = usePostsStore((state) => state.deletePost);
+  const setPosts = usePostsStore((state) => state.setPosts);
   const [form, setForm] = useState<PostFormState | null>(null);
-  const [savingPostId, setSavingPostId] = useState<string | null>(null);
+  const [processingPostId, setProcessingPostId] = useState<string | null>(null);
   const titleInputRef = useRef<HTMLInputElement>(null);
   const previousFormRef = useRef<PostFormState | null>(null);
 
@@ -97,26 +101,48 @@ const PostPanel = ({ posts, companyId, onPostsChange }: PostPanelProps) => {
       content: input.content,
     };
 
-    const previousPosts = posts;
-    const nextPosts = form.id
-      ? posts.map((post) => (post.id === form.id ? optimisticPost : post))
-      : [optimisticPost, ...posts];
+    const previousPosts = usePostsStore.getState().posts;
 
-    onPostsChange(nextPosts);
-    setSavingPostId(optimisticId);
+    upsertPost(optimisticPost);
+    setProcessingPostId(optimisticId);
     closeForm();
 
     try {
       const savedPost = await createOrUpdatePost(input);
-      onPostsChange(
-        nextPosts.map((post) => (post.id === optimisticId ? savedPost : post)),
-      );
+
+      if (savedPost.id !== optimisticId) {
+        deletePostFromStore(optimisticId);
+      }
+
+      upsertPost(savedPost);
       toast.default(t("pcf.post.saveSuccess"));
     } catch {
-      onPostsChange(previousPosts);
+      setPosts(previousPosts);
       toast.error(t("pcf.post.saveError"));
     } finally {
-      setSavingPostId(null);
+      setProcessingPostId(null);
+    }
+  };
+
+  const handleDelete = async (postId: string) => {
+    const previousPosts = usePostsStore.getState().posts;
+
+    deletePostFromStore(postId);
+
+    if (form?.id === postId) {
+      closeForm();
+    }
+
+    setProcessingPostId(postId);
+
+    try {
+      await deletePostRequest(postId);
+      toast.default(t("pcf.post.deleteSuccess"));
+    } catch {
+      setPosts(previousPosts);
+      toast.error(t("pcf.post.deleteError"));
+    } finally {
+      setProcessingPostId(null);
     }
   };
 
@@ -161,11 +187,13 @@ const PostPanel = ({ posts, companyId, onPostsChange }: PostPanelProps) => {
                 key={post.id}
                 post={post}
                 locale={locale}
-                isSaving={savingPostId === post.id}
+                isProcessing={processingPostId === post.id}
                 readMoreLabel={t("pcf.post.readMore")}
                 readLessLabel={t("pcf.post.readLess")}
                 editLabel={t("pcf.post.edit")}
+                deleteLabel={t("pcf.post.delete")}
                 onEdit={openEditForm}
+                onDelete={(targetPost) => void handleDelete(targetPost.id)}
               />
             ))}
           </ul>
