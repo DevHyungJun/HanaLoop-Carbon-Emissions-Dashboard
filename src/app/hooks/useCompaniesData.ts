@@ -4,9 +4,9 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import {
   ALL_COUNTRIES_FILTER,
-  DEFAULT_DATE_RANGE,
 } from "@/app/constants";
 import { fetchCompanies, fetchCountries } from "@/app/lib/api";
+import { useDateRangeStore } from "@/app/store";
 import type { Company } from "@/app/types/company";
 import type { Country } from "@/app/types/country";
 import {
@@ -18,6 +18,7 @@ import { useCountryName } from "./useCountryName";
 
 export const useCompaniesData = () => {
   const getCountryName = useCountryName();
+  const dateRange = useDateRangeStore((state) => state.dateRange);
   const [companies, setCompanies] = useState<Company[]>([]);
   const [countries, setCountries] = useState<Country[]>([]);
   const [selectedCountryCode, setSelectedCountryCode] = useState<string>(
@@ -73,8 +74,8 @@ export const useCompaniesData = () => {
   );
 
   const portfolioMetrics = useMemo(
-    () => computeCompaniesPortfolioMetrics(filteredCompanies, DEFAULT_DATE_RANGE),
-    [filteredCompanies],
+    () => computeCompaniesPortfolioMetrics(filteredCompanies, dateRange),
+    [filteredCompanies, dateRange],
   );
 
   useEffect(() => {
@@ -110,6 +111,6 @@ export const useCompaniesData = () => {
     isRefreshing,
     error,
     reload,
-    dateRange: DEFAULT_DATE_RANGE,
+    dateRange,
   };
 };

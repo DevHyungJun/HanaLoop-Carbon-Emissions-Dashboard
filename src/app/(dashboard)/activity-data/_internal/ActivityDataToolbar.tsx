@@ -1,8 +1,9 @@
 "use client";
 
 import { RefreshCw } from "lucide-react";
+import { useMemo } from "react";
 
-import { Button } from "@/app/components/common";
+import { Button, DateRangePicker } from "@/app/components/common";
 import {
   ALL_SOURCES_FILTER,
   EMISSION_SOURCES,
@@ -12,8 +13,10 @@ import {
   type EmissionSource,
 } from "@/app/constants";
 import { useCountryName, useTranslation } from "@/app/hooks";
+import { useDateRangeStore } from "@/app/store";
 import type { Company } from "@/app/types/company";
 import type { Country } from "@/app/types/country";
+import { getYearMonthsInRange } from "@/app/utils";
 
 import ActivityDataMonthPicker from "./ActivityDataMonthPicker";
 
@@ -48,12 +51,18 @@ const ActivityDataToolbar = ({
 }: ActivityDataToolbarProps) => {
   const { t } = useTranslation();
   const getCountryName = useCountryName();
+  const dateRange = useDateRangeStore((state) => state.dateRange);
+  const setDateRange = useDateRangeStore((state) => state.setDateRange);
   const hasCompanies = companies.length > 0;
+  const monthsInRange = useMemo(
+    () => getYearMonthsInRange(dateRange),
+    [dateRange],
+  );
 
   return (
     <section className="rounded-xl border border-border bg-card p-4">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-        <div className="grid flex-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid flex-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
           <label className="grid gap-1.5 text-sm">
             <span className="font-medium text-foreground">
               {t("activityData.toolbar.country")}
@@ -93,6 +102,12 @@ const ActivityDataToolbar = ({
             </select>
           </label>
 
+          <DateRangePicker
+            label={t("activityData.toolbar.period")}
+            dateRange={dateRange}
+            onDateRangeChange={setDateRange}
+          />
+
           <label className="grid gap-1.5 text-sm">
             <span className="font-medium text-foreground">
               {t("activityData.toolbar.source")}
@@ -116,6 +131,7 @@ const ActivityDataToolbar = ({
           <ActivityDataMonthPicker
             selectedMonth={selectedMonth}
             onMonthChange={onMonthChange}
+            months={monthsInRange}
           />
         </div>
 

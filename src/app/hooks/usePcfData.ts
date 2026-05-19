@@ -3,13 +3,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-import { DEFAULT_DATE_RANGE } from "@/app/constants";
 import {
   fetchActivityRecords,
   fetchCompanies,
   fetchCountries,
 } from "@/app/lib/api";
-import { useActivityRecordsStore } from "@/app/store";
+import { useActivityRecordsStore, useDateRangeStore } from "@/app/store";
 import type { ActivityRecord } from "@/app/types/activity-record";
 import type { Company } from "@/app/types/company";
 import type { Country } from "@/app/types/country";
@@ -42,6 +41,7 @@ export const usePcfData = () => {
   const [countries, setCountries] = useState<Country[]>([]);
   const records = useActivityRecordsStore((state) => state.records);
   const setRecords = useActivityRecordsStore((state) => state.setRecords);
+  const dateRange = useDateRangeStore((state) => state.dateRange);
   const [selectedCountryCode, setSelectedCountryCode] = useState("");
   const [selectedCompanyId, setSelectedCompanyId] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -167,8 +167,8 @@ export const usePcfData = () => {
   }, [selectedCompany, companyActivityRecords]);
 
   const metrics = useMemo(
-    () => computePcfMetrics(combinedEmissions, DEFAULT_DATE_RANGE),
-    [combinedEmissions],
+    () => computePcfMetrics(combinedEmissions, dateRange),
+    [combinedEmissions, dateRange],
   );
 
   return {
@@ -185,6 +185,6 @@ export const usePcfData = () => {
     isRefreshing,
     error,
     reload,
-    dateRange: DEFAULT_DATE_RANGE,
+    dateRange,
   };
 };

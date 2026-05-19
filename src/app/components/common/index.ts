@@ -4,3 +4,4 @@ export * from "./Card";
 export * from "./Button";
 export * from "./Skeleton";
 export * from "./MonthPicker";
+export * from "./DateRangePicker";

@@ -7,6 +7,10 @@ export type MessageKey =
   | "common.explore"
   | "common.openMenu"
   | "common.closeMenu"
+  | "common.dateRange.title"
+  | "common.dateRange.from"
+  | "common.dateRange.to"
+  | "common.dateRange.apply"
   | "common.collapseSidebar"
   | "common.expandSidebar"
   | "nav.sections.overview"
@@ -223,6 +227,10 @@ const ko: Messages = {
   "common.explore": "탐색",
   "common.openMenu": "메뉴 열기",
   "common.closeMenu": "메뉴 닫기",
+  "common.dateRange.title": "기간 선택",
+  "common.dateRange.from": "시작",
+  "common.dateRange.to": "종료",
+  "common.dateRange.apply": "적용",
   "common.collapseSidebar": "사이드바 접기",
   "common.expandSidebar": "사이드바 펼치기",
   "nav.sections.overview": "개요",
@@ -456,6 +464,10 @@ const en: Messages = {
   "common.explore": "Explore",
   "common.openMenu": "Open menu",
   "common.closeMenu": "Close menu",
+  "common.dateRange.title": "Select period",
+  "common.dateRange.from": "From",
+  "common.dateRange.to": "To",
+  "common.dateRange.apply": "Apply",
   "common.collapseSidebar": "Collapse sidebar",
   "common.expandSidebar": "Expand sidebar",
   "nav.sections.overview": "Overview",

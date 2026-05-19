@@ -6,11 +6,13 @@ import { useTranslation } from "@/app/hooks";
 type ActivityDataMonthPickerProps = {
   selectedMonth: string;
   onMonthChange: (month: string) => void;
+  months: readonly string[];
 };
 
 const ActivityDataMonthPicker = ({
   selectedMonth,
   onMonthChange,
+  months,
 }: ActivityDataMonthPickerProps) => {
   const { t } = useTranslation();
 
@@ -20,6 +22,7 @@ const ActivityDataMonthPicker = ({
       onMonthChange={onMonthChange}
       label={t("activityData.toolbar.month")}
       showAllMonthsOption
+      months={months}
     />
   );
 };

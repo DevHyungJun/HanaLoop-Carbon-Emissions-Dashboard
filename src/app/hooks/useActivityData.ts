@@ -5,18 +5,20 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   ALL_MONTHS_FILTER,
   ALL_SOURCES_FILTER,
-  DEFAULT_DATE_RANGE,
 } from "@/app/constants";
 import { fetchCompanies, fetchCountries } from "@/app/lib/api";
+import { useDateRangeStore } from "@/app/store";
 import type { Company } from "@/app/types/company";
 import type { Country } from "@/app/types/country";
 import {
   buildActivityDataRows,
   computeActivityDataSummary,
   filterActivityDataRows,
-} from "@/app/utils/activity-data";
+  isYearMonthInRange,
+} from "@/app/utils";
 
 export const useActivityData = () => {
+  const dateRange = useDateRangeStore((state) => state.dateRange);
   const [companies, setCompanies] = useState<Company[]>([]);
   const [countries, setCountries] = useState<Country[]>([]);
   const [selectedCountryCode, setSelectedCountryCode] = useState("");
@@ -71,6 +73,15 @@ export const useActivityData = () => {
     void loadData();
   }, [loadData]);
 
+  useEffect(() => {
+    if (
+      selectedMonth !== ALL_MONTHS_FILTER &&
+      !isYearMonthInRange(selectedMonth, dateRange)
+    ) {
+      setSelectedMonth(ALL_MONTHS_FILTER);
+    }
+  }, [dateRange, selectedMonth]);
+
   const reload = useCallback(() => loadData({ refresh: true }), [loadData]);
 
   const filteredCompanies = useMemo(() => {
@@ -100,8 +111,8 @@ export const useActivityData = () => {
   );
 
   const allRows = useMemo(
-    () => buildActivityDataRows(selectedCompany, DEFAULT_DATE_RANGE),
-    [selectedCompany],
+    () => buildActivityDataRows(selectedCompany, dateRange),
+    [selectedCompany, dateRange],
   );
 
   const filteredRows = useMemo(
@@ -132,6 +143,6 @@ export const useActivityData = () => {
     isRefreshing,
     error,
     reload,
-    dateRange: DEFAULT_DATE_RANGE,
+    dateRange,
   };
 };

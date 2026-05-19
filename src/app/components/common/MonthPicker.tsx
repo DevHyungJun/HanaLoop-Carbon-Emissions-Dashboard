@@ -22,6 +22,7 @@ type MonthPickerProps = {
   onMonthChange: (month: string) => void;
   label: string;
   showAllMonthsOption?: boolean;
+  months?: readonly string[];
 };
 
 const MonthPicker = ({
@@ -29,20 +30,21 @@ const MonthPicker = ({
   onMonthChange,
   label,
   showAllMonthsOption = false,
+  months = ACTIVITY_DATA_MONTHS,
 }: MonthPickerProps) => {
   const { locale, t } = useTranslation();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [draftYear, setDraftYear] = useState("");
   const [draftMonth, setDraftMonth] = useState("");
 
-  const years = useMemo(() => getActivityDataYears(), []);
+  const years = useMemo(() => getActivityDataYears(months), [months]);
 
   const monthOptions = useMemo(() => {
     if (!draftYear) {
       return [];
     }
 
-    return getActivityDataMonthsForYear(draftYear).map((yearMonth) => {
+    return getActivityDataMonthsForYear(draftYear, months).map((yearMonth) => {
       const { month } = parseActivityYearMonth(yearMonth);
 
       return {
@@ -50,7 +52,7 @@ const MonthPicker = ({
         label: formatActivityMonthShort(yearMonth, locale),
       };
     });
-  }, [draftYear, locale]);
+  }, [draftYear, locale, months]);
 
   const yearOptions = useMemo(
     () => years.map((year) => ({ value: year, label: year })),
@@ -63,7 +65,7 @@ const MonthPicker = ({
       : formatActivityMonthLong(selectedMonth, locale);
 
   const openSheet = () => {
-    const fallbackYearMonth = ACTIVITY_DATA_MONTHS[0] ?? "";
+    const fallbackYearMonth = months[0] ?? "";
     const initialYearMonth =
       showAllMonthsOption && selectedMonth === ALL_MONTHS_FILTER
         ? fallbackYearMonth
@@ -80,7 +82,7 @@ const MonthPicker = ({
       return;
     }
 
-    const monthsForYear = getActivityDataMonthsForYear(draftYear);
+    const monthsForYear = getActivityDataMonthsForYear(draftYear, months);
 
     if (
       monthsForYear.some((yearMonth) => yearMonth.endsWith(`-${draftMonth}`))
@@ -93,7 +95,7 @@ const MonthPicker = ({
     if (nextMonth) {
       setDraftMonth(nextMonth);
     }
-  }, [draftYear, draftMonth]);
+  }, [draftYear, draftMonth, months]);
 
   const handleApply = () => {
     if (draftYear && draftMonth) {
@@ -129,6 +131,7 @@ const MonthPicker = ({
         open={isSheetOpen}
         title={t("activityData.monthPicker.title")}
         onClose={() => setIsSheetOpen(false)}
+        bodyClassName="overflow-hidden"
         footer={
           showAllMonthsOption ? (
             <div className="flex gap-2">
@@ -151,7 +154,7 @@ const MonthPicker = ({
           )
         }
       >
-        <div className="flex items-start justify-center gap-6">
+        <div className="mx-auto flex w-fit max-w-md justify-center gap-1">
           <WheelSpinner
             label={t("activityData.monthPicker.year")}
             items={yearOptions}

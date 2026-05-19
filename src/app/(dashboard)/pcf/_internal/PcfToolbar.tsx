@@ -2,12 +2,13 @@
 
 import { RefreshCw } from "lucide-react";
 
-import { Button } from "@/app/components/common";
+import { Button, DateRangePicker } from "@/app/components/common";
 import {
   TOOLBAR_REFRESH_BUTTON_CLASS,
   TOOLBAR_SELECT_CLASS,
 } from "@/app/constants";
 import { useCountryName, useTranslation } from "@/app/hooks";
+import { useDateRangeStore } from "@/app/store";
 import type { Company } from "@/app/types/company";
 import type { Country } from "@/app/types/country";
 
@@ -34,11 +35,13 @@ const PcfToolbar = ({
 }: PcfToolbarProps) => {
   const { t } = useTranslation();
   const getCountryName = useCountryName();
+  const dateRange = useDateRangeStore((state) => state.dateRange);
+  const setDateRange = useDateRangeStore((state) => state.setDateRange);
   const hasCompanies = companies.length > 0;
 
   return (
     <section className="flex flex-col gap-4 rounded-xl border border-border bg-card p-4 sm:flex-row sm:items-end sm:justify-between">
-      <div className="grid w-full max-w-xl gap-4 sm:grid-cols-2">
+      <div className="grid w-full max-w-3xl gap-4 sm:grid-cols-2 xl:grid-cols-3">
         <label className="grid gap-1.5 text-sm">
           <span className="font-medium text-foreground">
             {t("pcf.toolbar.country")}
@@ -77,6 +80,12 @@ const PcfToolbar = ({
             )}
           </select>
         </label>
+
+        <DateRangePicker
+          label={t("pcf.toolbar.period")}
+          dateRange={dateRange}
+          onDateRangeChange={setDateRange}
+        />
       </div>
 
       <Button

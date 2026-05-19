@@ -5,6 +5,16 @@ export {
   SETTINGS_STORAGE_KEY,
 } from "./theme";
 export {
+  clampYearMonth,
+  DATE_RANGE_BOUNDS,
+  formatDateRangeLabel,
+  getYearMonthsForBounds,
+  getYearMonthsInRange,
+  isYearMonthInRange,
+  normalizeDateRange,
+  type DateRange,
+} from "./date-range";
+export {
   computeEstimatedCarbonTax,
   formatCarbonTaxAmount,
   formatCarbonTaxRate,

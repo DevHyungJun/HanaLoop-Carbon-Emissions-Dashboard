@@ -13,6 +13,7 @@ type BottomSheetProps = {
   onClose: () => void;
   children: ReactNode;
   footer?: ReactNode;
+  bodyClassName?: string;
 };
 
 const BottomSheet = ({
@@ -21,6 +22,7 @@ const BottomSheet = ({
   onClose,
   children,
   footer,
+  bodyClassName,
 }: BottomSheetProps) => {
   useEffect(() => {
     if (!open) {
@@ -76,7 +78,9 @@ const BottomSheet = ({
           </Button>
         </div>
 
-        <div className="overflow-y-auto px-4 py-5">{children}</div>
+        <div className={cn("overflow-y-auto px-4 py-5", bodyClassName)}>
+          {children}
+        </div>
 
         {footer ? (
           <div className="border-t border-border px-4 py-3">{footer}</div>

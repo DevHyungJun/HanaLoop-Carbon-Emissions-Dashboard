@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Plus } from "lucide-react";
 
 import {
@@ -13,7 +13,6 @@ import {
 } from "@/app/components/common";
 import { useToast } from "@/app/components/state";
 import {
-  DEFAULT_DATE_RANGE,
   EMISSION_SOURCES,
   TOOLBAR_ICON_TEXT_BUTTON_CLASS,
 } from "@/app/constants";
@@ -23,8 +22,9 @@ import {
   deleteActivityRecord,
   type CreateOrUpdateActivityRecordInput,
 } from "@/app/lib/api";
-import { useActivityRecordsStore } from "@/app/store";
+import { useActivityRecordsStore, useDateRangeStore } from "@/app/store";
 import type { ActivityRecord } from "@/app/types/activity-record";
+import { getYearMonthsInRange, isYearMonthInRange } from "@/app/utils";
 
 import ActivityRecordForm, {
   type ActivityRecordFormState,
@@ -37,13 +37,13 @@ type ActivityRecordPanelProps = {
   countryCode: string;
 };
 
-const EMPTY_FORM: ActivityRecordFormState = {
+const createEmptyForm = (defaultYearMonth: string): ActivityRecordFormState => ({
   title: "",
-  yearMonth: DEFAULT_DATE_RANGE.to,
+  yearMonth: defaultYearMonth,
   source: EMISSION_SOURCES[0],
   description: "",
   quantity: "",
-};
+});
 
 const ActivityRecordPanel = ({
   records,
@@ -52,6 +52,11 @@ const ActivityRecordPanel = ({
 }: ActivityRecordPanelProps) => {
   const { locale, t } = useTranslation();
   const { toast } = useToast();
+  const dateRange = useDateRangeStore((state) => state.dateRange);
+  const monthsInRange = useMemo(
+    () => getYearMonthsInRange(dateRange),
+    [dateRange],
+  );
   const upsertRecord = useActivityRecordsStore((state) => state.upsertRecord);
   const deleteRecordFromStore = useActivityRecordsStore(
     (state) => state.deleteRecord,
@@ -72,8 +77,22 @@ const ActivityRecordPanel = ({
     previousFormRef.current = form;
   }, [form]);
 
+  useEffect(() => {
+    if (!form) {
+      return;
+    }
+
+    if (!isYearMonthInRange(form.yearMonth, dateRange)) {
+      setForm((currentForm) =>
+        currentForm
+          ? { ...currentForm, yearMonth: dateRange.to }
+          : currentForm,
+      );
+    }
+  }, [dateRange, form]);
+
   const openCreateForm = () => {
-    setForm({ ...EMPTY_FORM, yearMonth: DEFAULT_DATE_RANGE.to });
+    setForm(createEmptyForm(dateRange.to));
   };
 
   const openEditForm = (record: ActivityRecord) => {
@@ -179,6 +198,14 @@ const ActivityRecordPanel = ({
     ? records.filter((record) => record.id !== form.id)
     : records;
 
+  const recordsInRange = useMemo(
+    () =>
+      visibleRecords.filter((record) =>
+        isYearMonthInRange(record.yearMonth, dateRange),
+      ),
+    [dateRange, visibleRecords],
+  );
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-start justify-between gap-4">
@@ -201,6 +228,7 @@ const ActivityRecordPanel = ({
           <ActivityRecordForm
             form={form}
             countryCode={countryCode}
+            months={monthsInRange}
             titleInputRef={titleInputRef}
             onChange={setForm}
             onCancel={closeForm}
@@ -208,13 +236,13 @@ const ActivityRecordPanel = ({
           />
         ) : null}
 
-        {visibleRecords.length === 0 && !form ? (
+        {recordsInRange.length === 0 && !form ? (
           <p className="text-sm text-muted-foreground">
             {t("pcf.activity.empty")}
           </p>
-        ) : visibleRecords.length > 0 ? (
+        ) : recordsInRange.length > 0 ? (
           <ul className="min-w-0 space-y-3">
-            {visibleRecords.map((record) => (
+            {recordsInRange.map((record) => (
               <ActivityRecordListItem
                 key={record.id}
                 record={record}

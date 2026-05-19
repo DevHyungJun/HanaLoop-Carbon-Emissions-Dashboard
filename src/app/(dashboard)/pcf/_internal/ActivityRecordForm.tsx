@@ -31,6 +31,7 @@ export type ActivityRecordFormState = {
 type ActivityRecordFormProps = {
   form: ActivityRecordFormState;
   countryCode: string;
+  months: string[];
   titleInputRef: RefObject<HTMLInputElement | null>;
   onChange: (nextForm: ActivityRecordFormState) => void;
   onCancel: () => void;
@@ -66,6 +67,7 @@ const syncTextareaHeight = (textarea: HTMLTextAreaElement | null) => {
 const ActivityRecordForm = ({
   form,
   countryCode,
+  months,
   titleInputRef,
   onChange,
   onCancel,
@@ -135,6 +137,7 @@ const ActivityRecordForm = ({
         selectedMonth={form.yearMonth}
         onMonthChange={(yearMonth) => onChange({ ...form, yearMonth })}
         label={t("pcf.activity.fieldMonth")}
+        months={months}
       />
 
       <label className="grid gap-1.5 text-sm">

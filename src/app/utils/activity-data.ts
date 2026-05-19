@@ -9,6 +9,7 @@ import type { EmissionScope } from "@/app/constants/pcf";
 import type { Company } from "@/app/types/company";
 
 import { filterEmissionsByRange, getEmissionScope } from "./emissions";
+import type { DateRange } from "./date-range";
 
 export const groupActivityDataMonthsByYear = (
   months: readonly string[] = ACTIVITY_DATA_MONTHS,
@@ -88,7 +89,7 @@ export type ActivityDataSummary = {
 
 export const buildActivityDataRows = (
   company: Company | undefined,
-  range = DEFAULT_DATE_RANGE,
+  range: DateRange = DEFAULT_DATE_RANGE,
 ): ActivityDataRow[] => {
   if (!company) {
     return [];
