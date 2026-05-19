@@ -3,6 +3,7 @@ import { pretendard } from "@/fonts/pretendard";
 import "./globals.css";
 import { Geist } from "next/font/google";
 import { cn } from "./utils";
+import { Providers } from "./components/state";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -30,7 +31,7 @@ export default function RootLayout({
       <body
         className={`${pretendard.className} min-h-full flex flex-col font-sans`}
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
