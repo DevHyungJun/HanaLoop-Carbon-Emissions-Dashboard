@@ -4,11 +4,26 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { DEFAULT_DATE_RANGE } from "@/app/constants";
-import { fetchCompanies, fetchCountries } from "@/app/lib/api";
+import { fetchCompanies, fetchCountries, fetchPosts } from "@/app/lib/api";
 import { usePostsStore } from "@/app/store";
 import type { Company } from "@/app/types/company";
 import type { Country } from "@/app/types/country";
+import type { Post } from "@/app/types/post";
 import { computePcfMetrics } from "@/app/utils/emissions";
+
+const mergePosts = (fetchedPosts: Post[], localPosts: Post[]) => {
+  const merged = new Map<string, Post>();
+
+  for (const post of fetchedPosts) {
+    merged.set(post.id, post);
+  }
+
+  for (const post of localPosts) {
+    merged.set(post.id, post);
+  }
+
+  return Array.from(merged.values());
+};
 
 export const usePcfData = () => {
   const searchParams = useSearchParams();
@@ -16,6 +31,7 @@ export const usePcfData = () => {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [countries, setCountries] = useState<Country[]>([]);
   const posts = usePostsStore((state) => state.posts);
+  const setPosts = usePostsStore((state) => state.setPosts);
   const [selectedCountryCode, setSelectedCountryCode] = useState("");
   const [selectedCompanyId, setSelectedCompanyId] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -32,13 +48,16 @@ export const usePcfData = () => {
     setError(null);
 
     try {
-      const [nextCompanies, nextCountries] = await Promise.all([
+      const localPosts = usePostsStore.getState().posts;
+      const [nextCompanies, nextCountries, fetchedPosts] = await Promise.all([
         fetchCompanies(),
         fetchCountries(),
+        fetchPosts(),
       ]);
 
       setCompanies(nextCompanies);
       setCountries(nextCountries);
+      setPosts(mergePosts(fetchedPosts, localPosts));
       setSelectedCountryCode((currentCode) => {
         if (
           currentCode &&
@@ -68,7 +87,7 @@ export const usePcfData = () => {
         setIsLoading(false);
       }
     }
-  }, [companyFromUrl]);
+  }, [companyFromUrl, setPosts]);
 
   useEffect(() => {
     void loadData();

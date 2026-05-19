@@ -1,8 +1,9 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import { MOCK_POSTS } from "@/app/mock/data";
 import type { Post } from "@/app/types/post";
+
+const SEED_POST_IDS = new Set(["post-1", "post-2", "post-3"]);
 
 type PostsState = {
   posts: Post[];
@@ -14,7 +15,7 @@ type PostsState = {
 export const usePostsStore = create<PostsState>()(
   persist(
     (set) => ({
-      posts: MOCK_POSTS,
+      posts: [],
       setPosts: (posts) => set({ posts }),
       upsertPost: (post) =>
         set((state) => {
@@ -35,6 +36,14 @@ export const usePostsStore = create<PostsState>()(
     }),
     {
       name: "hana-loop-posts",
+      version: 1,
+      migrate: (persistedState) => {
+        const state = persistedState as PostsState;
+
+        return {
+          posts: state.posts.filter((post) => !SEED_POST_IDS.has(post.id)),
+        };
+      },
     },
   ),
 );

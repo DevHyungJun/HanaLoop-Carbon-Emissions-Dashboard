@@ -83,26 +83,4 @@ export const MOCK_COMPANIES: Company[] = COMPANY_DEFINITIONS.map(
   }),
 );
 
-export const MOCK_POSTS: Post[] = [
-  {
-    id: "post-1",
-    title: "2025-Q1 감축 계획",
-    resourceUid: "company-hanaloop-mfg",
-    dateTime: "2025-01",
-    content: "고정 연소 설비 효율 개선으로 Scope 1 배출 8% 감축 목표.",
-  },
-  {
-    id: "post-2",
-    title: "물류 경로 최적화",
-    resourceUid: "company-green-logistics",
-    dateTime: "2025-03",
-    content: "중거리 배송 경로 재편으로 diesel 사용량 12% 절감 예상.",
-  },
-  {
-    id: "post-3",
-    title: "재생에너지 전환 검토",
-    resourceUid: "company-pacific-steel",
-    dateTime: "2025-02",
-    content: "Scope 2 electricity 배출 감축을 위한 PPA 도입 검토 중.",
-  },
-];
+export const MOCK_POSTS: Post[] = [];
