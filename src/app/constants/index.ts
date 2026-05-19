@@ -20,3 +20,8 @@ export {
   type NavItem,
   type NavSectionId,
 } from "./navigation";
+export {
+  OVERVIEW_QUICK_LINKS,
+  OVERVIEW_SCOPES,
+  OVERVIEW_WORKFLOW_STEPS,
+} from "./overview";
