@@ -15,6 +15,7 @@ import {
   SIDEBAR_ICON_BUTTON_CLASS,
 } from "./sidebarStyles";
 import DashboardBrand from "./DashboardBrand";
+import DashboardPreferenceToggles from "./DashboardPreferenceToggles";
 
 type NavLinkProps = {
   href: string;
@@ -163,6 +164,8 @@ const NavigationDrawer = () => {
             })}
           </div>
         </nav>
+
+        <DashboardPreferenceToggles isSidebarCollapsed={isSidebarCollapsed} />
       </aside>
     </>
   );

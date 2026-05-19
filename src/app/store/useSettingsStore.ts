@@ -9,6 +9,7 @@ type SettingsState = {
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
   setLocale: (locale: Locale) => void;
+  toggleLocale: () => void;
 };
 
 export const useSettingsStore = create<SettingsState>()(
@@ -20,6 +21,8 @@ export const useSettingsStore = create<SettingsState>()(
       toggleTheme: () =>
         set({ theme: get().theme === "light" ? "dark" : "light" }),
       setLocale: (locale) => set({ locale }),
+      toggleLocale: () =>
+        set({ locale: get().locale === "ko" ? "en" : "ko" }),
     }),
     {
       name: "hana-loop-settings",

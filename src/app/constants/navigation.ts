@@ -5,12 +5,11 @@ import {
   Calculator,
   Database,
   FlaskConical,
-  Settings,
 } from "lucide-react";
 
 import type { MessageKey } from "./i18n";
 
-export type NavSectionId = "overview" | "analysis" | "data" | "settings";
+export type NavSectionId = "overview" | "analysis" | "data";
 
 export type NavItem = {
   href: string;
@@ -24,7 +23,6 @@ export const NAV_SECTIONS: { id: NavSectionId; labelKey: MessageKey }[] = [
   { id: "overview", labelKey: "nav.sections.overview" },
   { id: "analysis", labelKey: "nav.sections.analysis" },
   { id: "data", labelKey: "nav.sections.data" },
-  { id: "settings", labelKey: "nav.sections.settings" },
 ];
 
 export const NAV_ITEMS: NavItem[] = [
@@ -62,13 +60,6 @@ export const NAV_ITEMS: NavItem[] = [
     descriptionKey: "nav.emissionFactorsDesc",
     icon: FlaskConical,
     section: "data",
-  },
-  {
-    href: "/settings",
-    labelKey: "nav.settings",
-    descriptionKey: "nav.settingsDesc",
-    icon: Settings,
-    section: "settings",
   },
 ];
 

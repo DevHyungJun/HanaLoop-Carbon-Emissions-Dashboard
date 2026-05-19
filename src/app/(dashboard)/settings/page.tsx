@@ -1,11 +1,7 @@
-import { SettingsPanel } from "@/app/components/layout";
+import { redirect } from "next/navigation";
 
 const SettingsPage = () => {
-  return (
-    <div className="flex items-center justify-center py-8">
-      <SettingsPanel />
-    </div>
-  );
+  redirect("/");
 };
 
 export default SettingsPage;

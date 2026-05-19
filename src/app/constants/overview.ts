@@ -81,8 +81,8 @@ export const OVERVIEW_QUICK_LINKS: OverviewQuickLink[] = [
     descriptionKey: "nav.companiesDesc",
   },
   {
-    href: "/settings",
-    labelKey: "nav.settings",
-    descriptionKey: "nav.settingsDesc",
+    href: "/activity-data",
+    labelKey: "nav.activityData",
+    descriptionKey: "nav.activityDataDesc",
   },
 ];
