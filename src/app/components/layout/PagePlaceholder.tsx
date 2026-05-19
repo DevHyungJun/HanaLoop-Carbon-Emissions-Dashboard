@@ -4,11 +4,11 @@ type PagePlaceholderProps = {
   description: string;
 };
 
-export function PagePlaceholder({
+const PagePlaceholder = ({
   badge,
   title,
   description,
-}: PagePlaceholderProps) {
+}: PagePlaceholderProps) => {
   return (
     <section className="rounded-xl border border-dashed border-border bg-card p-8">
       <p className="text-sm font-medium text-emerald-600">{badge}</p>
@@ -18,4 +18,6 @@ export function PagePlaceholder({
       </p>
     </section>
   );
-}
+};
+
+export default PagePlaceholder;

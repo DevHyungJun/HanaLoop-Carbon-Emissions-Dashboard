@@ -12,7 +12,7 @@ type OptionButtonProps = {
   onClick: () => void;
 };
 
-function OptionButton({ isActive, label, onClick }: OptionButtonProps) {
+const OptionButton = ({ isActive, label, onClick }: OptionButtonProps) => {
   return (
     <button
       type="button"
@@ -27,9 +27,9 @@ function OptionButton({ isActive, label, onClick }: OptionButtonProps) {
       {label}
     </button>
   );
-}
+};
 
-export function SettingsPanel() {
+const SettingsPanel = () => {
   const { t } = useTranslation();
   const theme = useSettingsStore((state) => state.theme);
   const locale = useSettingsStore((state) => state.locale);
@@ -89,4 +89,6 @@ export function SettingsPanel() {
       </div>
     </section>
   );
-}
+};
+
+export default SettingsPanel;

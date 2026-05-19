@@ -2,10 +2,10 @@
 
 import type { ReactNode } from "react";
 
-import { SettingsProvider } from "./SettingsProvider";
+import SettingsProvider from "./SettingsProvider";
 import { ToastProvider } from "./ToastProvider";
 
-export function Providers({ children }: { children: ReactNode }) {
+const Providers = ({ children }: { children: ReactNode }) => {
   return (
     <SettingsProvider>
       <ToastProvider>
@@ -13,4 +13,6 @@ export function Providers({ children }: { children: ReactNode }) {
       </ToastProvider>
     </SettingsProvider>
   );
-}
+};
+
+export default Providers;

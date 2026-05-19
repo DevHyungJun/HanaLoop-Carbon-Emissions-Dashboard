@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { APP_NAME } from "@/app/constants";
 
-export function DashboardBrand() {
+const DashboardBrand = () => {
   return (
     <div className="flex items-center gap-2 text-sm font-semibold tracking-wide text-emerald-600 uppercase">
       <Image
@@ -15,4 +15,6 @@ export function DashboardBrand() {
       <span>{APP_NAME}</span>
     </div>
   );
-}
+};
+
+export default DashboardBrand;

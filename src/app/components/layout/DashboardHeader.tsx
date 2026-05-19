@@ -4,10 +4,7 @@ import { usePathname } from "next/navigation";
 import { Menu, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 
 import { Button } from "@/app/components/common";
-import {
-  DEFAULT_DATE_RANGE,
-  getNavItemByPathname,
-} from "@/app/constants";
+import { DEFAULT_DATE_RANGE, getNavItemByPathname } from "@/app/constants";
 import { useTranslation } from "@/app/hooks";
 import { useDashboardStore } from "@/app/store";
 import { cn } from "@/app/utils";
@@ -16,13 +13,13 @@ import {
   getSidebarIconButtonStateClass,
   SIDEBAR_ICON_BUTTON_CLASS,
 } from "./sidebarStyles";
-import { DashboardBrand } from "./DashboardBrand";
+import DashboardBrand from "./DashboardBrand";
 
 type DashboardHeaderProps = {
   className?: string;
 };
 
-export function DashboardHeader({ className }: DashboardHeaderProps) {
+const DashboardHeader = ({ className }: DashboardHeaderProps) => {
   const pathname = usePathname();
   const { t } = useTranslation();
   const currentPage = getNavItemByPathname(pathname);
@@ -91,4 +88,6 @@ export function DashboardHeader({ className }: DashboardHeaderProps) {
       </div>
     </header>
   );
-}
+};
+
+export default DashboardHeader;

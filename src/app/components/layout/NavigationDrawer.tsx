@@ -14,7 +14,7 @@ import {
   getSidebarIconButtonStateClass,
   SIDEBAR_ICON_BUTTON_CLASS,
 } from "./sidebarStyles";
-import { DashboardBrand } from "./DashboardBrand";
+import DashboardBrand from "./DashboardBrand";
 
 type NavLinkProps = {
   href: string;
@@ -25,14 +25,14 @@ type NavLinkProps = {
   onNavigate: () => void;
 };
 
-function NavLink({
+const NavLink = ({
   href,
   label,
   icon: Icon,
   isActive,
   isSidebarCollapsed,
   onNavigate,
-}: NavLinkProps) {
+}: NavLinkProps) => {
   return (
     <Link
       href={href}
@@ -59,9 +59,9 @@ function NavLink({
       </span>
     </Link>
   );
-}
+};
 
-export function NavigationDrawer() {
+const NavigationDrawer = () => {
   const pathname = usePathname();
   const { t } = useTranslation();
   const isDrawerOpen = useDashboardStore((state) => state.isDrawerOpen);
@@ -119,10 +119,7 @@ export function NavigationDrawer() {
           )}
         >
           <div
-            className={cn(
-              "hidden space-y-1",
-              isSidebarCollapsed && "lg:block",
-            )}
+            className={cn("hidden space-y-1", isSidebarCollapsed && "lg:block")}
           >
             {NAV_ITEMS.map((item) => (
               <NavLink
@@ -169,4 +166,6 @@ export function NavigationDrawer() {
       </aside>
     </>
   );
-}
+};
+
+export default NavigationDrawer;

@@ -4,7 +4,7 @@ import { useEffect, type ReactNode } from "react";
 
 import { useSettingsStore } from "@/app/store";
 
-export function SettingsProvider({ children }: { children: ReactNode }) {
+const SettingsProvider = ({ children }: { children: ReactNode }) => {
   const theme = useSettingsStore((state) => state.theme);
   const locale = useSettingsStore((state) => state.locale);
 
@@ -14,4 +14,6 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   }, [theme, locale]);
 
   return children;
-}
+};
+
+export default SettingsProvider;
