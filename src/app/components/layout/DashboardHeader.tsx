@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { Menu, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 
 import { Button } from "@/app/components/common";
-import { DEFAULT_DATE_RANGE, getNavItemByPathname } from "@/app/constants";
+import { getNavItemByPathname } from "@/app/constants";
 import { useTranslation } from "@/app/hooks";
 import { useDashboardStore } from "@/app/store";
 import { cn } from "@/app/utils";
@@ -81,10 +81,6 @@ const DashboardHeader = ({ className }: DashboardHeaderProps) => {
         <p className="truncate text-xs text-muted-foreground">
           {t(currentPage.descriptionKey)}
         </p>
-      </div>
-
-      <div className="hidden shrink-0 rounded-lg border border-border bg-muted/40 px-3 py-1.5 text-xs text-muted-foreground sm:block">
-        {DEFAULT_DATE_RANGE.from} ~ {DEFAULT_DATE_RANGE.to}
       </div>
     </header>
   );

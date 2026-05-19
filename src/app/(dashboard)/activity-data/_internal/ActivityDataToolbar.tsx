@@ -5,12 +5,11 @@ import { RefreshCw } from "lucide-react";
 import { Button } from "@/app/components/common";
 import {
   ALL_SOURCES_FILTER,
-  DEFAULT_DATE_RANGE,
   EMISSION_SOURCES,
   EMISSION_SOURCE_LABEL_KEYS,
   type EmissionSource,
 } from "@/app/constants";
-import { useTranslation } from "@/app/hooks";
+import { useCountryName, useTranslation } from "@/app/hooks";
 import type { Company } from "@/app/types/company";
 import type { Country } from "@/app/types/country";
 
@@ -46,12 +45,13 @@ const ActivityDataToolbar = ({
   isRefreshing,
 }: ActivityDataToolbarProps) => {
   const { t } = useTranslation();
+  const getCountryName = useCountryName();
   const hasCompanies = companies.length > 0;
 
   return (
     <section className="rounded-xl border border-border bg-card p-4">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-        <div className="grid flex-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
+        <div className="grid flex-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <label className="grid gap-1.5 text-sm">
             <span className="font-medium text-foreground">
               {t("activityData.toolbar.country")}
@@ -63,7 +63,7 @@ const ActivityDataToolbar = ({
             >
               {countries.map((country) => (
                 <option key={country.code} value={country.code}>
-                  {country.name}
+                  {getCountryName(country.code)}
                 </option>
               ))}
             </select>
@@ -115,15 +115,6 @@ const ActivityDataToolbar = ({
             selectedMonth={selectedMonth}
             onMonthChange={onMonthChange}
           />
-
-          <div className="grid gap-1.5 text-sm">
-            <span className="font-medium text-foreground">
-              {t("activityData.toolbar.period")}
-            </span>
-            <div className="flex h-9 items-center rounded-lg border border-border bg-muted/40 px-3 text-sm text-muted-foreground">
-              {DEFAULT_DATE_RANGE.from} ~ {DEFAULT_DATE_RANGE.to}
-            </div>
-          </div>
         </div>
 
         <Button

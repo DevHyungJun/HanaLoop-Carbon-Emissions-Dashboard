@@ -14,7 +14,12 @@ import {
   filterEmissionFactors,
 } from "@/app/utils/emission-factors";
 
+import { useCountryName } from "./useCountryName";
+import { useTranslation } from "./useTranslation";
+
 export const useEmissionFactorsData = () => {
+  const { t } = useTranslation();
+  const getCountryName = useCountryName();
   const [factors, setFactors] = useState<EmissionFactor[]>([]);
   const [countries, setCountries] = useState<Country[]>([]);
   const [selectedScope, setSelectedScope] = useState<string>(ALL_SCOPES_FILTER);
@@ -72,14 +77,12 @@ export const useEmissionFactorsData = () => {
   const getRegionLabel = useCallback(
     (region: string) => {
       if (region === "GLOBAL") {
-        return "GLOBAL";
+        return t("emissionFactors.region.global");
       }
 
-      return (
-        countries.find((country) => country.code === region)?.name ?? region
-      );
+      return getCountryName(region);
     },
-    [countries],
+    [getCountryName, t],
   );
 
   return {

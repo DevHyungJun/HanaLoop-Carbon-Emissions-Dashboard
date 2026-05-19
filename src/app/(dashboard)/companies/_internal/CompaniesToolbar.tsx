@@ -3,8 +3,8 @@
 import { RefreshCw } from "lucide-react";
 
 import { Button } from "@/app/components/common";
-import { ALL_COUNTRIES_FILTER, DEFAULT_DATE_RANGE } from "@/app/constants";
-import { useTranslation } from "@/app/hooks";
+import { ALL_COUNTRIES_FILTER } from "@/app/constants";
+import { useCountryName, useTranslation } from "@/app/hooks";
 import type { Country } from "@/app/types/country";
 
 type CompaniesToolbarProps = {
@@ -23,39 +23,29 @@ const CompaniesToolbar = ({
   isRefreshing,
 }: CompaniesToolbarProps) => {
   const { t } = useTranslation();
+  const getCountryName = useCountryName();
 
   return (
     <section className="flex flex-col gap-4 rounded-xl border border-border bg-card p-4 sm:flex-row sm:items-end sm:justify-between">
-      <div className="grid gap-4 sm:grid-cols-2">
-        <label className="grid gap-1.5 text-sm">
-          <span className="font-medium text-foreground">
-            {t("companies.toolbar.country")}
-          </span>
-          <select
-            value={selectedCountryCode}
-            onChange={(event) => onCountryChange(event.target.value)}
-            className="h-9 rounded-lg border border-border bg-background px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
-          >
-            <option value={ALL_COUNTRIES_FILTER}>
-              {t("companies.toolbar.allCountries")}
-            </option>
+      <label className="grid w-full max-w-sm gap-1.5 text-sm">
+        <span className="font-medium text-foreground">
+          {t("companies.toolbar.country")}
+        </span>
+        <select
+          value={selectedCountryCode}
+          onChange={(event) => onCountryChange(event.target.value)}
+          className="h-9 rounded-lg border border-border bg-background px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+        >
+          <option value={ALL_COUNTRIES_FILTER}>
+            {t("companies.toolbar.allCountries")}
+          </option>
             {countries.map((country) => (
               <option key={country.code} value={country.code}>
-                {country.name}
+                {getCountryName(country.code)}
               </option>
             ))}
-          </select>
-        </label>
-
-        <div className="grid gap-1.5 text-sm">
-          <span className="font-medium text-foreground">
-            {t("companies.toolbar.period")}
-          </span>
-          <div className="flex h-9 items-center rounded-lg border border-border bg-muted/40 px-3 text-sm text-muted-foreground">
-            {DEFAULT_DATE_RANGE.from} ~ {DEFAULT_DATE_RANGE.to}
-          </div>
-        </div>
-      </div>
+        </select>
+      </label>
 
       <Button
         type="button"

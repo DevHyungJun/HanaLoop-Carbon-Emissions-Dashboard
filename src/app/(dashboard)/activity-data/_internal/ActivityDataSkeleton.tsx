@@ -11,8 +11,8 @@ const ActivityDataSkeleton = () => {
       <span className="sr-only">{t("activityData.loading")}</span>
 
       <section className="rounded-xl border border-border bg-card p-4">
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
-          {Array.from({ length: 5 }).map((_, index) => (
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {Array.from({ length: 4 }).map((_, index) => (
             <div key={index} className="space-y-2">
               <Skeleton className="h-4 w-16" />
               <Skeleton className="h-9 w-full" />

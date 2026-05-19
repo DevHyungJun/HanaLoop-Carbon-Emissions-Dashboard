@@ -14,7 +14,10 @@ import {
   filterCompaniesByCountry,
 } from "@/app/utils/companies";
 
+import { useCountryName } from "./useCountryName";
+
 export const useCompaniesData = () => {
+  const getCountryName = useCountryName();
   const [companies, setCompanies] = useState<Company[]>([]);
   const [countries, setCountries] = useState<Country[]>([]);
   const [selectedCountryCode, setSelectedCountryCode] = useState<string>(
@@ -91,13 +94,6 @@ export const useCompaniesData = () => {
         (company) => company.id === selectedCompanyId,
       ),
     [portfolioMetrics.companies, selectedCompanyId],
-  );
-
-  const getCountryName = useCallback(
-    (countryCode: string) =>
-      countries.find((country) => country.code === countryCode)?.name ??
-      countryCode,
-    [countries],
   );
 
   return {

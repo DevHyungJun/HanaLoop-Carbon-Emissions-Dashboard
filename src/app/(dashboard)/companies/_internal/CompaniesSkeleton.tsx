@@ -12,15 +12,9 @@ const CompaniesSkeleton = () => {
 
       <section className="rounded-xl border border-border bg-card p-4">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div className="grid flex-1 gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Skeleton className="h-4 w-10" />
-              <Skeleton className="h-9 w-full" />
-            </div>
-            <div className="space-y-2">
-              <Skeleton className="h-4 w-10" />
-              <Skeleton className="h-9 w-full" />
-            </div>
+          <div className="w-full max-w-sm space-y-2">
+            <Skeleton className="h-4 w-10" />
+            <Skeleton className="h-9 w-full" />
           </div>
           <Skeleton className="h-9 w-28 sm:self-end" />
         </div>

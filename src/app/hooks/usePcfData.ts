@@ -4,8 +4,9 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { DEFAULT_DATE_RANGE } from "@/app/constants";
-import { fetchCompanies, fetchPosts } from "@/app/lib/api";
+import { fetchCompanies, fetchCountries, fetchPosts } from "@/app/lib/api";
 import type { Company } from "@/app/types/company";
+import type { Country } from "@/app/types/country";
 import type { Post } from "@/app/types/post";
 import { computePcfMetrics } from "@/app/utils/emissions";
 
@@ -13,7 +14,9 @@ export const usePcfData = () => {
   const searchParams = useSearchParams();
   const companyFromUrl = searchParams.get("company");
   const [companies, setCompanies] = useState<Company[]>([]);
+  const [countries, setCountries] = useState<Country[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
+  const [selectedCountryCode, setSelectedCountryCode] = useState("");
   const [selectedCompanyId, setSelectedCompanyId] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -29,19 +32,34 @@ export const usePcfData = () => {
     setError(null);
 
     try {
-      const [nextCompanies, nextPosts] = await Promise.all([
+      const [nextCompanies, nextPosts, nextCountries] = await Promise.all([
         fetchCompanies(),
         fetchPosts(),
+        fetchCountries(),
       ]);
 
       setCompanies(nextCompanies);
       setPosts(nextPosts);
-      setSelectedCompanyId((currentId) => {
-        if (currentId && nextCompanies.some((company) => company.id === currentId)) {
-          return currentId;
+      setCountries(nextCountries);
+      setSelectedCountryCode((currentCode) => {
+        if (
+          currentCode &&
+          nextCountries.some((country) => country.code === currentCode)
+        ) {
+          return currentCode;
         }
 
-        return nextCompanies[0]?.id ?? "";
+        if (companyFromUrl) {
+          const companyFromQuery = nextCompanies.find(
+            (company) => company.id === companyFromUrl,
+          );
+
+          if (companyFromQuery) {
+            return companyFromQuery.country;
+          }
+        }
+
+        return nextCountries[0]?.code ?? "";
       });
     } catch {
       setError("load_failed");
@@ -52,24 +70,49 @@ export const usePcfData = () => {
         setIsLoading(false);
       }
     }
-  }, []);
+  }, [companyFromUrl]);
 
   useEffect(() => {
     void loadData();
   }, [loadData]);
 
+  const reload = useCallback(() => loadData({ refresh: true }), [loadData]);
+
+  const filteredCompanies = useMemo(() => {
+    if (!selectedCountryCode) {
+      return [];
+    }
+
+    return companies.filter(
+      (company) => company.country === selectedCountryCode,
+    );
+  }, [companies, selectedCountryCode]);
+
   useEffect(() => {
     if (
-      !companyFromUrl ||
-      !companies.some((company) => company.id === companyFromUrl)
+      selectedCompanyId &&
+      filteredCompanies.some((company) => company.id === selectedCompanyId)
     ) {
       return;
     }
 
-    setSelectedCompanyId(companyFromUrl);
-  }, [companyFromUrl, companies]);
+    setSelectedCompanyId(filteredCompanies[0]?.id ?? "");
+  }, [filteredCompanies, selectedCompanyId]);
 
-  const reload = useCallback(() => loadData({ refresh: true }), [loadData]);
+  useEffect(() => {
+    if (!companyFromUrl || companies.length === 0) {
+      return;
+    }
+
+    const company = companies.find((item) => item.id === companyFromUrl);
+
+    if (!company) {
+      return;
+    }
+
+    setSelectedCountryCode(company.country);
+    setSelectedCompanyId(company.id);
+  }, [companyFromUrl, companies]);
 
   const selectedCompany = useMemo(
     () => companies.find((company) => company.id === selectedCompanyId),
@@ -90,14 +133,16 @@ export const usePcfData = () => {
   );
 
   return {
-    companies,
-    posts,
-    setPosts,
+    countries,
+    companies: filteredCompanies,
+    selectedCountryCode,
+    setSelectedCountryCode,
     selectedCompanyId,
     setSelectedCompanyId,
     selectedCompany,
     metrics,
     companyPosts,
+    setPosts,
     isLoading,
     isRefreshing,
     error,

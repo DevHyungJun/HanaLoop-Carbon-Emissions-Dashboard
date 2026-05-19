@@ -19,10 +19,13 @@ import {
 const Pcf = () => {
   const { t } = useTranslation();
   const {
+    countries,
     companies,
-    setPosts,
+    selectedCountryCode,
+    setSelectedCountryCode,
     selectedCompanyId,
     setSelectedCompanyId,
+    setPosts,
     metrics,
     companyPosts,
     isLoading,
@@ -62,8 +65,11 @@ const Pcf = () => {
   return (
     <div className="space-y-6">
       <PcfToolbar
+        countries={countries}
         companies={companies}
+        selectedCountryCode={selectedCountryCode}
         selectedCompanyId={selectedCompanyId}
+        onCountryChange={setSelectedCountryCode}
         onCompanyChange={setSelectedCompanyId}
         onRefresh={() => void reload()}
         isRefreshing={isRefreshing}

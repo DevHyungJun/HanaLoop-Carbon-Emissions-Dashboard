@@ -32,6 +32,11 @@ export type MessageKey =
   | "settings.themeDark"
   | "settings.localeKo"
   | "settings.localeEn"
+  | "country.KR"
+  | "country.US"
+  | "country.JP"
+  | "country.DE"
+  | "country.CN"
   | "overview.hero.badge"
   | "overview.hero.title"
   | "overview.hero.subtitle"
@@ -55,6 +60,8 @@ export type MessageKey =
   | "overview.unit.description"
   | "overview.quickLinks.title"
   | "pcf.toolbar.company"
+  | "pcf.toolbar.country"
+  | "pcf.toolbar.noCompany"
   | "pcf.toolbar.period"
   | "pcf.toolbar.refresh"
   | "pcf.loading"
@@ -229,6 +236,11 @@ const ko: Messages = {
   "settings.themeDark": "다크",
   "settings.localeKo": "한국어",
   "settings.localeEn": "English",
+  "country.KR": "대한민국",
+  "country.US": "미국",
+  "country.JP": "일본",
+  "country.DE": "독일",
+  "country.CN": "중국",
   "overview.hero.badge": "HanaLoop Platform",
   "overview.hero.title": "제품 탄소 발자국(PCF)을 한눈에 관리하세요",
   "overview.hero.subtitle":
@@ -261,6 +273,8 @@ const ko: Messages = {
     "tCO2e(CO₂ equivalent)는 메탄·아산화질소 등 다양한 온실가스를 CO₂ 기준으로 환산한 톤 단위입니다. 대시보드의 모든 배출량은 tCO2e로 통일해 표시합니다.",
   "overview.quickLinks.title": "바로가기",
   "pcf.toolbar.company": "회사",
+  "pcf.toolbar.country": "국가",
+  "pcf.toolbar.noCompany": "해당 국가에 회사 없음",
   "pcf.toolbar.period": "기간",
   "pcf.toolbar.refresh": "새로고침",
   "pcf.loading": "PCF 데이터를 불러오는 중입니다.",
@@ -439,6 +453,11 @@ const en: Messages = {
   "settings.themeDark": "Dark",
   "settings.localeKo": "Korean",
   "settings.localeEn": "English",
+  "country.KR": "South Korea",
+  "country.US": "United States",
+  "country.JP": "Japan",
+  "country.DE": "Germany",
+  "country.CN": "China",
   "overview.hero.badge": "HanaLoop Platform",
   "overview.hero.title": "Manage product carbon footprints at a glance",
   "overview.hero.subtitle":
@@ -471,6 +490,8 @@ const en: Messages = {
     "tCO2e (CO₂ equivalent) converts various greenhouse gases such as methane and nitrous oxide into a CO₂ basis, measured in metric tons. All emissions in this dashboard are shown in tCO2e.",
   "overview.quickLinks.title": "Quick links",
   "pcf.toolbar.company": "Company",
+  "pcf.toolbar.country": "Country",
+  "pcf.toolbar.noCompany": "No companies in this country",
   "pcf.toolbar.period": "Period",
   "pcf.toolbar.refresh": "Refresh",
   "pcf.loading": "Loading PCF data...",

@@ -48,6 +48,13 @@ export {
 } from "./companies";
 
 export {
+  COUNTRY_CODES,
+  COUNTRY_LABEL_KEYS,
+  isCountryCode,
+  type CountryCode,
+} from "./countries";
+
+export {
   ACTIVITY_DATA_MONTHS,
   ACTIVITY_DATA_PAGE_SIZE,
   ALL_MONTHS_FILTER,
