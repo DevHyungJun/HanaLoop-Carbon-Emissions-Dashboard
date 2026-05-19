@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 import { DEFAULT_DATE_RANGE } from "@/app/constants";
 import { fetchCompanies, fetchPosts } from "@/app/lib/api";
@@ -9,6 +10,8 @@ import type { Post } from "@/app/types/post";
 import { computePcfMetrics } from "@/app/utils/emissions";
 
 export const usePcfData = () => {
+  const searchParams = useSearchParams();
+  const companyFromUrl = searchParams.get("company");
   const [companies, setCompanies] = useState<Company[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
   const [selectedCompanyId, setSelectedCompanyId] = useState("");
@@ -54,6 +57,17 @@ export const usePcfData = () => {
   useEffect(() => {
     void loadData();
   }, [loadData]);
+
+  useEffect(() => {
+    if (
+      !companyFromUrl ||
+      !companies.some((company) => company.id === companyFromUrl)
+    ) {
+      return;
+    }
+
+    setSelectedCompanyId(companyFromUrl);
+  }, [companyFromUrl, companies]);
 
   const reload = useCallback(() => loadData({ refresh: true }), [loadData]);
 

@@ -40,4 +40,11 @@ export {
   type EmissionSource,
 } from "./pcf";
 
+export {
+  ALL_COUNTRIES_FILTER,
+  COMPANIES_TABLE_PAGE_SIZE,
+  COMPANY_CHART_THEMES,
+  COUNTRY_CHART_THEMES,
+} from "./companies";
+
 export * from "./button";

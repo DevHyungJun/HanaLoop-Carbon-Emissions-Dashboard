@@ -1,13 +1,7 @@
-import { PagePlaceholder } from "@/app/components/layout";
+import Companies from "./Companies";
 
 const CompaniesPage = () => {
-  return (
-    <PagePlaceholder
-      badge="Analysis"
-      title="회사"
-      description="조직 경계별 배출 현황, 국가·계열사 비교, 회사 상세 드릴다운이 제공될 페이지입니다."
-    />
-  );
+  return <Companies />;
 };
 
 export default CompaniesPage;

@@ -94,7 +94,39 @@ export type MessageKey =
   | "pcf.post.fieldContent"
   | "pcf.post.saveSuccess"
   | "pcf.post.saveError"
-  | "pcf.unit";
+  | "pcf.unit"
+  | "companies.toolbar.country"
+  | "companies.toolbar.allCountries"
+  | "companies.toolbar.period"
+  | "companies.toolbar.refresh"
+  | "companies.loading"
+  | "companies.error"
+  | "companies.kpi.companyCount"
+  | "companies.kpi.companyCountDesc"
+  | "companies.kpi.totalEmissions"
+  | "companies.kpi.totalEmissionsDesc"
+  | "companies.kpi.avgPerCompany"
+  | "companies.kpi.avgPerCompanyDesc"
+  | "companies.kpi.topCountry"
+  | "companies.kpi.topCountryDesc"
+  | "companies.chart.countryComparison"
+  | "companies.chart.countryComparisonDesc"
+  | "companies.chart.companyComparison"
+  | "companies.chart.companyComparisonDesc"
+  | "companies.table.title"
+  | "companies.table.description"
+  | "companies.table.company"
+  | "companies.table.country"
+  | "companies.table.total"
+  | "companies.table.monthlyAvg"
+  | "companies.table.empty"
+  | "companies.detail.title"
+  | "companies.detail.viewPcf"
+  | "companies.detail.selectHint"
+  | "companies.chart.emissions"
+  | "companies.pagination.previous"
+  | "companies.pagination.next"
+  | "companies.pagination.summary";
 
 type Messages = Record<MessageKey, string>;
 
@@ -204,6 +236,38 @@ const ko: Messages = {
   "pcf.post.saveSuccess": "감축 메모가 저장되었습니다.",
   "pcf.post.saveError": "저장에 실패했습니다. 변경 사항을 되돌렸습니다.",
   "pcf.unit": "tCO2e",
+  "companies.toolbar.country": "국가",
+  "companies.toolbar.allCountries": "전체 국가",
+  "companies.toolbar.period": "기간",
+  "companies.toolbar.refresh": "새로고침",
+  "companies.loading": "회사 데이터를 불러오는 중입니다.",
+  "companies.error": "데이터를 불러오지 못했습니다. 다시 시도해 주세요.",
+  "companies.kpi.companyCount": "회사 수",
+  "companies.kpi.companyCountDesc": "선택 범위 내 조직 수",
+  "companies.kpi.totalEmissions": "총 배출량",
+  "companies.kpi.totalEmissionsDesc": "선택 기간 누적 tCO2e",
+  "companies.kpi.avgPerCompany": "회사당 평균",
+  "companies.kpi.avgPerCompanyDesc": "조직 1개당 평균 배출량",
+  "companies.kpi.topCountry": "최대 배출 국가",
+  "companies.kpi.topCountryDesc": "국가별 합산 기준 1위",
+  "companies.chart.countryComparison": "국가별 배출 비교",
+  "companies.chart.countryComparisonDesc": "국가 단위 tCO2e 합산",
+  "companies.chart.companyComparison": "회사별 배출 비교",
+  "companies.chart.companyComparisonDesc": "조직별 tCO2e 순위",
+  "companies.table.title": "회사 목록",
+  "companies.table.description": "배출량 순으로 정렬된 조직 목록입니다.",
+  "companies.table.company": "회사",
+  "companies.table.country": "국가",
+  "companies.table.total": "총 배출량",
+  "companies.table.monthlyAvg": "월평균",
+  "companies.table.empty": "표시할 회사가 없습니다.",
+  "companies.detail.title": "회사 상세",
+  "companies.detail.viewPcf": "PCF 상세 보기",
+  "companies.detail.selectHint": "목록에서 회사를 선택하면 Scope 구성을 확인할 수 있습니다.",
+  "companies.chart.emissions": "배출량",
+  "companies.pagination.previous": "이전",
+  "companies.pagination.next": "다음",
+  "companies.pagination.summary": "총 {{total}}개 중 {{from}}-{{to}}",
 };
 
 const en: Messages = {
@@ -314,6 +378,38 @@ const en: Messages = {
   "pcf.post.saveSuccess": "Reduction note saved.",
   "pcf.post.saveError": "Save failed. Your changes were rolled back.",
   "pcf.unit": "tCO2e",
+  "companies.toolbar.country": "Country",
+  "companies.toolbar.allCountries": "All countries",
+  "companies.toolbar.period": "Period",
+  "companies.toolbar.refresh": "Refresh",
+  "companies.loading": "Loading company data...",
+  "companies.error": "Failed to load data. Please try again.",
+  "companies.kpi.companyCount": "Companies",
+  "companies.kpi.companyCountDesc": "Organizations in selected scope",
+  "companies.kpi.totalEmissions": "Total emissions",
+  "companies.kpi.totalEmissionsDesc": "Cumulative tCO2e in period",
+  "companies.kpi.avgPerCompany": "Average per company",
+  "companies.kpi.avgPerCompanyDesc": "Mean emissions per organization",
+  "companies.kpi.topCountry": "Top country",
+  "companies.kpi.topCountryDesc": "Highest total by country",
+  "companies.chart.countryComparison": "Emissions by country",
+  "companies.chart.countryComparisonDesc": "Country-level tCO2e totals",
+  "companies.chart.companyComparison": "Emissions by company",
+  "companies.chart.companyComparisonDesc": "Organization ranking by tCO2e",
+  "companies.table.title": "Company list",
+  "companies.table.description": "Organizations sorted by total emissions.",
+  "companies.table.company": "Company",
+  "companies.table.country": "Country",
+  "companies.table.total": "Total",
+  "companies.table.monthlyAvg": "Monthly avg.",
+  "companies.table.empty": "No companies to display.",
+  "companies.detail.title": "Company detail",
+  "companies.detail.viewPcf": "View PCF details",
+  "companies.detail.selectHint": "Select a company from the list to view Scope breakdown.",
+  "companies.chart.emissions": "Emissions",
+  "companies.pagination.previous": "Previous",
+  "companies.pagination.next": "Next",
+  "companies.pagination.summary": "{{from}}-{{to}} of {{total}}",
 };
 
 export const MESSAGES: Record<Locale, Messages> = {
