@@ -212,7 +212,11 @@ const WheelSpinner = <T extends string>({
           />
 
           <div
-            className={cn(isDragging ? "transition-none" : "transition-transform duration-200 ease-out")}
+            className={cn(
+              isDragging
+                ? "transition-none"
+                : "transition-transform duration-200 ease-out",
+            )}
             style={{ transform: `translateY(${wheelTranslateY}px)` }}
           >
             {items.map((item, index) => (
@@ -250,4 +254,5 @@ const WheelSpinner = <T extends string>({
   );
 };
 
-export default WheelSpinner;
+export { WheelSpinner };
+export type { WheelSpinnerProps };

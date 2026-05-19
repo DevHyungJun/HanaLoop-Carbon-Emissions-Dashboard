@@ -10,13 +10,13 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  MonthPicker,
 } from "@/app/components/common";
 import { useToast } from "@/app/components/state";
 import {
   DEFAULT_DATE_RANGE,
   TOOLBAR_ICON_TEXT_BUTTON_CLASS,
   TOOLBAR_INPUT_CLASS,
-  TOOLBAR_SELECT_CLASS,
 } from "@/app/constants";
 import { useTranslation } from "@/app/hooks";
 import {
@@ -24,6 +24,7 @@ import {
   type CreateOrUpdatePostInput,
 } from "@/app/lib/api";
 import type { Post } from "@/app/types/post";
+import { formatActivityMonthLong } from "@/app/utils/activity-data";
 
 type PostFormState = {
   id?: string;
@@ -45,7 +46,7 @@ const EMPTY_FORM: PostFormState = {
 };
 
 const PostPanel = ({ posts, companyId, onPostsChange }: PostPanelProps) => {
-  const { t } = useTranslation();
+  const { locale, t } = useTranslation();
   const { toast } = useToast();
   const [form, setForm] = useState<PostFormState | null>(null);
   const [savingPostId, setSavingPostId] = useState<string | null>(null);
@@ -168,21 +169,15 @@ const PostPanel = ({ posts, companyId, onPostsChange }: PostPanelProps) => {
               />
             </label>
 
-            <label className="grid gap-1.5 text-sm">
-              <span className="font-medium">{t("pcf.post.fieldMonth")}</span>
-              <input
-                type="month"
-                value={form.dateTime}
-                onChange={(event) =>
-                  setForm((current) =>
-                    current
-                      ? { ...current, dateTime: event.target.value }
-                      : current,
-                  )
-                }
-                className={TOOLBAR_SELECT_CLASS}
-              />
-            </label>
+            <MonthPicker
+              selectedMonth={form.dateTime}
+              onMonthChange={(dateTime) =>
+                setForm((current) =>
+                  current ? { ...current, dateTime } : current,
+                )
+              }
+              label={t("pcf.post.fieldMonth")}
+            />
 
             <label className="grid gap-1.5 text-sm">
               <span className="font-medium">{t("pcf.post.fieldContent")}</span>
@@ -224,7 +219,7 @@ const PostPanel = ({ posts, companyId, onPostsChange }: PostPanelProps) => {
                   <div>
                     <p className="font-medium text-foreground">{post.title}</p>
                     <p className="mt-1 text-xs text-muted-foreground">
-                      {post.dateTime}
+                      {formatActivityMonthLong(post.dateTime, locale)}
                     </p>
                   </div>
                   <Button
