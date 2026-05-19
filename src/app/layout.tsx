@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { pretendard } from "@/fonts/pretendard";
 import "./globals.css";
+import { Geist } from "next/font/google";
+import { cn } from "./utils";
+
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "HanaLoop Carbon Emissions Dashboard",
@@ -15,7 +19,13 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
-      className={`${pretendard.variable} h-full antialiased`}
+      className={cn(
+        "h-full",
+        "antialiased",
+        pretendard.variable,
+        "font-sans",
+        geist.variable,
+      )}
     >
       <body
         className={`${pretendard.className} min-h-full flex flex-col font-sans`}
