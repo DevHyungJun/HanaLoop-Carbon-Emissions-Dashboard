@@ -1,3 +1,4 @@
+export { default as PcfSkeleton } from "./PcfSkeleton";
 export { default as PcfToolbar } from "./PcfToolbar";
 export { default as PcfKpiCards } from "./PcfKpiCards";
 export { default as PcfMonthlyTrendChart } from "./PcfMonthlyTrendChart";

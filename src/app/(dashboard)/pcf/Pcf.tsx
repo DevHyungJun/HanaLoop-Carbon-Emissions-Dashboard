@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback } from "react";
-import { Loader2 } from "lucide-react";
 
 import { Button } from "@/app/components/common";
 import { usePcfData, useTranslation } from "@/app/hooks";
@@ -12,6 +11,7 @@ import {
   PcfMonthlyTrendChart,
   PcfScopeChart,
   PcfSourceChart,
+  PcfSkeleton,
   PcfToolbar,
   PostPanel,
 } from "./_internal";
@@ -45,14 +45,7 @@ const Pcf = () => {
   );
 
   if (isLoading) {
-    return (
-      <div className="flex min-h-64 items-center justify-center rounded-xl border border-dashed border-border bg-card">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Loader2 className="size-4 animate-spin" aria-hidden />
-          {t("pcf.loading")}
-        </div>
-      </div>
-    );
+    return <PcfSkeleton />;
   }
 
   if (error || !selectedCompanyId) {
