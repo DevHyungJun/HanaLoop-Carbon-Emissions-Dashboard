@@ -99,6 +99,9 @@ export type MessageKey =
   | "pcf.post.fieldTitle"
   | "pcf.post.fieldMonth"
   | "pcf.post.fieldContent"
+  | "pcf.post.readMore"
+  | "pcf.post.readLess"
+  | "pcf.post.charCount"
   | "pcf.post.saveSuccess"
   | "pcf.post.saveError"
   | "pcf.unit"
@@ -313,6 +316,9 @@ const ko: Messages = {
   "pcf.post.fieldTitle": "제목",
   "pcf.post.fieldMonth": "대상 월",
   "pcf.post.fieldContent": "내용",
+  "pcf.post.readMore": "더보기",
+  "pcf.post.readLess": "접기",
+  "pcf.post.charCount": "{{current}}/{{max}}",
   "pcf.post.saveSuccess": "감축 메모가 저장되었습니다.",
   "pcf.post.saveError": "저장에 실패했습니다. 변경 사항을 되돌렸습니다.",
   "pcf.unit": "tCO2e",
@@ -530,6 +536,9 @@ const en: Messages = {
   "pcf.post.fieldTitle": "Title",
   "pcf.post.fieldMonth": "Target month",
   "pcf.post.fieldContent": "Content",
+  "pcf.post.readMore": "Read more",
+  "pcf.post.readLess": "Show less",
+  "pcf.post.charCount": "{{current}}/{{max}}",
   "pcf.post.saveSuccess": "Reduction note saved.",
   "pcf.post.saveError": "Save failed. Your changes were rolled back.",
   "pcf.unit": "tCO2e",

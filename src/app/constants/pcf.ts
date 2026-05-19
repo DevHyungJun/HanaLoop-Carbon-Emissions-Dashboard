@@ -101,3 +101,11 @@ export const PCF_CHART_CONFIG = {
     },
   },
 } as const;
+
+export const POST_TITLE_MAX_LENGTH = 50;
+
+export const POST_CONTENT_MAX_LENGTH = 500;
+
+export const POST_CONTENT_COLLAPSED_LINES = 3;
+
+export const POST_CONTENT_EXPAND_MIN_LENGTH = 120;
