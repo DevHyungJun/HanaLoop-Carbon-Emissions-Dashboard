@@ -1,6 +1,6 @@
+import type { ActivityRecord } from "@/app/types/activity-record";
 import type { Company } from "@/app/types/company";
 import type { Country } from "@/app/types/country";
-import type { Post } from "@/app/types/post";
 
 export const MOCK_COUNTRIES: Country[] = [
   { code: "KR", name: "대한민국" },
@@ -83,4 +83,4 @@ export const MOCK_COMPANIES: Company[] = COMPANY_DEFINITIONS.map(
   }),
 );
 
-export const MOCK_POSTS: Post[] = [];
+export const MOCK_ACTIVITY_RECORDS: ActivityRecord[] = [];

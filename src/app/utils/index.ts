@@ -40,6 +40,12 @@ export {
   type ActivityDataSummary,
 } from "./activity-data";
 export {
+  computeActivityRecordEmissions,
+  getActivityRecordUnit,
+  mergeEmissionsWithActivityRecords,
+  resolveEmissionFactor,
+} from "./activity-records";
+export {
   computeEmissionFactorsSummary,
   filterEmissionFactors,
   formatEmissionFactorValue,

@@ -10,7 +10,7 @@ import {
   PcfSourceChart,
   PcfSkeleton,
   PcfToolbar,
-  PostPanel,
+  ActivityRecordPanel,
 } from "./_internal";
 
 const Pcf = () => {
@@ -23,7 +23,7 @@ const Pcf = () => {
     selectedCompanyId,
     setSelectedCompanyId,
     metrics,
-    companyPosts,
+    companyActivityRecords,
     selectedCompany,
     isLoading,
     isRefreshing,
@@ -71,7 +71,11 @@ const Pcf = () => {
         <PcfSourceChart sourceTotals={metrics.sourceTotals} />
       </div>
 
-      <PostPanel posts={companyPosts} companyId={selectedCompanyId} />
+      <ActivityRecordPanel
+        records={companyActivityRecords}
+        companyId={selectedCompanyId}
+        countryCode={selectedCompany?.country ?? selectedCountryCode}
+      />
     </div>
   );
 };

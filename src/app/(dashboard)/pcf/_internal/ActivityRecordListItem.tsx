@@ -5,32 +5,43 @@ import { Pencil, Trash2 } from "lucide-react";
 
 import { Button } from "@/app/components/common";
 import {
-  POST_CONTENT_COLLAPSED_LINES,
-  POST_CONTENT_EXPAND_MIN_LENGTH,
+  ACTIVITY_RECORD_DESCRIPTION_COLLAPSED_LINES,
+  ACTIVITY_RECORD_DESCRIPTION_EXPAND_MIN_LENGTH,
+  EMISSION_SOURCE_LABEL_KEYS,
   TOOLBAR_ICON_TEXT_BUTTON_CLASS,
+  type EmissionSource,
 } from "@/app/constants";
 import type { Locale } from "@/app/constants/i18n";
-import type { Post } from "@/app/types/post";
-import { cn, formatActivityMonthLong } from "@/app/utils";
+import { useTranslation } from "@/app/hooks";
+import type { ActivityRecord } from "@/app/types/activity-record";
+import {
+  cn,
+  computeActivityRecordEmissions,
+  formatActivityMonthLong,
+  formatTco2e,
+  getActivityRecordUnit,
+} from "@/app/utils";
 
-type PostListItemProps = {
-  post: Post;
+type ActivityRecordListItemProps = {
+  record: ActivityRecord;
+  countryCode: string;
   locale: Locale;
   isProcessing: boolean;
   readMoreLabel: string;
   readLessLabel: string;
   editLabel: string;
   deleteLabel: string;
-  onEdit: (post: Post) => void;
-  onDelete: (post: Post) => void;
+  onEdit: (record: ActivityRecord) => void;
+  onDelete: (record: ActivityRecord) => void;
 };
 
-const isContentExpandable = (content: string) =>
-  content.length > POST_CONTENT_EXPAND_MIN_LENGTH ||
-  content.split("\n").length > POST_CONTENT_COLLAPSED_LINES;
+const isDescriptionExpandable = (description: string) =>
+  description.length > ACTIVITY_RECORD_DESCRIPTION_EXPAND_MIN_LENGTH ||
+  description.split("\n").length > ACTIVITY_RECORD_DESCRIPTION_COLLAPSED_LINES;
 
-const PostListItem = ({
-  post,
+const ActivityRecordListItem = ({
+  record,
+  countryCode,
   locale,
   isProcessing,
   readMoreLabel,
@@ -39,9 +50,13 @@ const PostListItem = ({
   deleteLabel,
   onEdit,
   onDelete,
-}: PostListItemProps) => {
+}: ActivityRecordListItemProps) => {
+  const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
-  const canExpandContent = isContentExpandable(post.content);
+  const canExpandDescription = isDescriptionExpandable(record.description);
+  const unit = getActivityRecordUnit(record.source, countryCode);
+  const emissions = computeActivityRecordEmissions(record, countryCode);
+  const sourceLabel = t(EMISSION_SOURCE_LABEL_KEYS[record.source as EmissionSource]);
 
   return (
     <li className="min-w-0 rounded-xl border border-border bg-background p-4">
@@ -49,12 +64,12 @@ const PostListItem = ({
         <div className="min-w-0 flex-1">
           <p
             className="truncate font-medium text-foreground"
-            title={post.title}
+            title={record.title}
           >
-            {post.title}
+            {record.title}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
-            {formatActivityMonthLong(post.dateTime, locale)}
+            {formatActivityMonthLong(record.yearMonth, locale)} · {sourceLabel}
           </p>
         </div>
         <div className="flex shrink-0 items-center gap-1">
@@ -63,7 +78,7 @@ const PostListItem = ({
             variant="ghost"
             size="sm"
             className={TOOLBAR_ICON_TEXT_BUTTON_CLASS}
-            onClick={() => onEdit(post)}
+            onClick={() => onEdit(record)}
             disabled={isProcessing}
           >
             <Pencil className="size-4" aria-hidden />
@@ -77,7 +92,7 @@ const PostListItem = ({
               TOOLBAR_ICON_TEXT_BUTTON_CLASS,
               "text-destructive hover:text-destructive",
             )}
-            onClick={() => onDelete(post)}
+            onClick={() => onDelete(record)}
             disabled={isProcessing}
           >
             <Trash2 className="size-4" aria-hidden />
@@ -86,6 +101,25 @@ const PostListItem = ({
         </div>
       </div>
 
+      <dl className="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+        <div>
+          <dt className="text-xs text-muted-foreground">
+            {t("pcf.activity.fieldQuantity")}
+          </dt>
+          <dd className="font-medium text-foreground">
+            {record.quantity.toLocaleString()} {unit}
+          </dd>
+        </div>
+        <div>
+          <dt className="text-xs text-muted-foreground">
+            {t("pcf.activity.computedEmissions")}
+          </dt>
+          <dd className="font-medium text-foreground">
+            {formatTco2e(emissions)} {t("pcf.unit")}
+          </dd>
+        </div>
+      </dl>
+
       <div className="mt-3 min-w-0">
         <p
           className={cn(
@@ -93,10 +127,10 @@ const PostListItem = ({
             isExpanded ? "whitespace-pre-wrap" : "line-clamp-3",
           )}
         >
-          {post.content}
+          {record.description}
         </p>
 
-        {canExpandContent ? (
+        {canExpandDescription ? (
           <Button
             type="button"
             variant="link"
@@ -112,4 +146,4 @@ const PostListItem = ({
   );
 };
 
-export default PostListItem;
+export default ActivityRecordListItem;

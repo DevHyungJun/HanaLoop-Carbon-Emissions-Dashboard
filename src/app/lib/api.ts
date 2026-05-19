@@ -1,15 +1,15 @@
 import { EMISSION_FACTOR_DEFINITIONS } from "@/app/constants/emission-factors";
-import { MOCK_COMPANIES, MOCK_COUNTRIES, MOCK_POSTS } from "@/app/mock/data";
+import { MOCK_ACTIVITY_RECORDS, MOCK_COMPANIES, MOCK_COUNTRIES } from "@/app/mock/data";
+import type { ActivityRecord } from "@/app/types/activity-record";
 import type { Company } from "@/app/types/company";
 import type { Country } from "@/app/types/country";
 import type { EmissionFactor } from "@/app/types/emission-factor";
-import type { Post } from "@/app/types/post";
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 const jitter = () => 200 + Math.random() * 600;
 const maybeFail = () => Math.random() < 0.15;
 
-let postsStore: Post[] = structuredClone(MOCK_POSTS);
+let activityRecordsStore: ActivityRecord[] = structuredClone(MOCK_ACTIVITY_RECORDS);
 
 const withDelay = async <T>(operation: () => T): Promise<T> => {
   await delay(jitter());
@@ -24,64 +24,92 @@ export const fetchCompanies = async (): Promise<Company[]> => {
   return withDelay(() => structuredClone(MOCK_COMPANIES));
 };
 
-export const fetchPosts = async (): Promise<Post[]> => {
-  return withDelay(() => structuredClone(postsStore));
+export const fetchActivityRecords = async (): Promise<ActivityRecord[]> => {
+  return withDelay(() => structuredClone(activityRecordsStore));
 };
+
+/** @deprecated Post API 호환 alias */
+export const fetchPosts = fetchActivityRecords;
 
 export const fetchEmissionFactors = async (): Promise<EmissionFactor[]> => {
   return withDelay(() => structuredClone(EMISSION_FACTOR_DEFINITIONS));
 };
 
-export type CreateOrUpdatePostInput = Omit<Post, "id"> & { id?: string };
+export type CreateOrUpdateActivityRecordInput = Omit<ActivityRecord, "id"> & {
+  id?: string;
+};
 
-export class PostSaveError extends Error {
-  constructor(message = "게시글 저장에 실패했습니다. 잠시 후 다시 시도해 주세요.") {
+/** @deprecated Post API 호환 alias */
+export type CreateOrUpdatePostInput = CreateOrUpdateActivityRecordInput;
+
+export class ActivityRecordSaveError extends Error {
+  constructor(
+    message = "활동 데이터 저장에 실패했습니다. 잠시 후 다시 시도해 주세요.",
+  ) {
     super(message);
-    this.name = "PostSaveError";
+    this.name = "ActivityRecordSaveError";
   }
 }
 
-export class PostDeleteError extends Error {
-  constructor(message = "게시글 삭제에 실패했습니다. 잠시 후 다시 시도해 주세요.") {
+/** @deprecated Post API 호환 alias */
+export class PostSaveError extends ActivityRecordSaveError {}
+
+export class ActivityRecordDeleteError extends Error {
+  constructor(
+    message = "활동 데이터 삭제에 실패했습니다. 잠시 후 다시 시도해 주세요.",
+  ) {
     super(message);
-    this.name = "PostDeleteError";
+    this.name = "ActivityRecordDeleteError";
   }
 }
 
-export const createOrUpdatePost = async (
-  input: CreateOrUpdatePostInput,
-): Promise<Post> => {
+/** @deprecated Post API 호환 alias */
+export class PostDeleteError extends ActivityRecordDeleteError {}
+
+export const createOrUpdateActivityRecord = async (
+  input: CreateOrUpdateActivityRecordInput,
+): Promise<ActivityRecord> => {
   await delay(jitter());
 
   if (maybeFail()) {
-    throw new PostSaveError();
+    throw new ActivityRecordSaveError();
   }
 
-  const post: Post = {
+  const record: ActivityRecord = {
     id: input.id ?? crypto.randomUUID(),
+    companyId: input.companyId,
+    yearMonth: input.yearMonth,
+    source: input.source,
     title: input.title,
-    resourceUid: input.resourceUid,
-    dateTime: input.dateTime,
-    content: input.content,
+    description: input.description,
+    quantity: input.quantity,
   };
 
-  const existingIndex = postsStore.findIndex((item) => item.id === post.id);
+  const existingIndex = activityRecordsStore.findIndex(
+    (item) => item.id === record.id,
+  );
 
   if (existingIndex >= 0) {
-    postsStore[existingIndex] = post;
+    activityRecordsStore[existingIndex] = record;
   } else {
-    postsStore = [post, ...postsStore];
+    activityRecordsStore = [record, ...activityRecordsStore];
   }
 
-  return structuredClone(post);
+  return structuredClone(record);
 };
 
-export const deletePost = async (id: string): Promise<void> => {
+/** @deprecated Post API 호환 alias */
+export const createOrUpdatePost = createOrUpdateActivityRecord;
+
+export const deleteActivityRecord = async (id: string): Promise<void> => {
   await delay(jitter());
 
   if (maybeFail()) {
-    throw new PostDeleteError();
+    throw new ActivityRecordDeleteError();
   }
 
-  postsStore = postsStore.filter((post) => post.id !== id);
+  activityRecordsStore = activityRecordsStore.filter((record) => record.id !== id);
 };
+
+/** @deprecated Post API 호환 alias */
+export const deletePost = deleteActivityRecord;

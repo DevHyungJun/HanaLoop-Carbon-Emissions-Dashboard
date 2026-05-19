@@ -92,24 +92,30 @@ export type MessageKey =
   | "pcf.source.lpg"
   | "pcf.source.naturalGas"
   | "pcf.source.electricity"
-  | "pcf.post.title"
-  | "pcf.post.description"
-  | "pcf.post.empty"
-  | "pcf.post.add"
-  | "pcf.post.edit"
-  | "pcf.post.delete"
-  | "pcf.post.save"
-  | "pcf.post.cancel"
-  | "pcf.post.fieldTitle"
-  | "pcf.post.fieldMonth"
-  | "pcf.post.fieldContent"
-  | "pcf.post.readMore"
-  | "pcf.post.readLess"
-  | "pcf.post.charCount"
-  | "pcf.post.saveSuccess"
-  | "pcf.post.saveError"
-  | "pcf.post.deleteSuccess"
-  | "pcf.post.deleteError"
+  | "pcf.activity.title"
+  | "pcf.activity.description"
+  | "pcf.activity.empty"
+  | "pcf.activity.add"
+  | "pcf.activity.edit"
+  | "pcf.activity.delete"
+  | "pcf.activity.save"
+  | "pcf.activity.cancel"
+  | "pcf.activity.fieldTitle"
+  | "pcf.activity.fieldMonth"
+  | "pcf.activity.fieldSource"
+  | "pcf.activity.fieldDescription"
+  | "pcf.activity.fieldQuantity"
+  | "pcf.activity.fieldQuantityWithUnit"
+  | "pcf.activity.previewEmissions"
+  | "pcf.activity.computedEmissions"
+  | "pcf.activity.readMore"
+  | "pcf.activity.readLess"
+  | "pcf.activity.charCount"
+  | "pcf.activity.saveSuccess"
+  | "pcf.activity.saveError"
+  | "pcf.activity.deleteSuccess"
+  | "pcf.activity.deleteError"
+  | "pcf.activity.invalidQuantity"
   | "pcf.unit"
   | "companies.toolbar.country"
   | "companies.toolbar.allCountries"
@@ -314,24 +320,32 @@ const ko: Messages = {
   "pcf.source.lpg": "LPG",
   "pcf.source.naturalGas": "천연가스",
   "pcf.source.electricity": "전력",
-  "pcf.post.title": "감축 메모",
-  "pcf.post.description": "감축 계획과 실행 메모를 기록합니다.",
-  "pcf.post.empty": "등록된 감축 메모가 없습니다.",
-  "pcf.post.add": "메모 추가",
-  "pcf.post.edit": "수정",
-  "pcf.post.delete": "삭제",
-  "pcf.post.save": "저장",
-  "pcf.post.cancel": "취소",
-  "pcf.post.fieldTitle": "제목",
-  "pcf.post.fieldMonth": "대상 월",
-  "pcf.post.fieldContent": "내용",
-  "pcf.post.readMore": "더보기",
-  "pcf.post.readLess": "접기",
-  "pcf.post.charCount": "{{current}}/{{max}}",
-  "pcf.post.saveSuccess": "감축 메모가 저장되었습니다.",
-  "pcf.post.saveError": "저장에 실패했습니다. 변경 사항을 되돌렸습니다.",
-  "pcf.post.deleteSuccess": "감축 메모가 삭제되었습니다.",
-  "pcf.post.deleteError": "삭제에 실패했습니다. 변경 사항을 되돌렸습니다.",
+  "pcf.activity.title": "활동 데이터 입력",
+  "pcf.activity.description":
+    "회사별 활동량을 입력하면 배출 계수를 적용해 PCF에 반영됩니다.",
+  "pcf.activity.empty": "등록된 활동 데이터가 없습니다.",
+  "pcf.activity.add": "활동 추가",
+  "pcf.activity.edit": "수정",
+  "pcf.activity.delete": "삭제",
+  "pcf.activity.save": "저장",
+  "pcf.activity.cancel": "취소",
+  "pcf.activity.fieldTitle": "제목",
+  "pcf.activity.fieldMonth": "일자 (년·월)",
+  "pcf.activity.fieldSource": "활동 유형",
+  "pcf.activity.fieldDescription": "설명",
+  "pcf.activity.fieldQuantity": "활동량",
+  "pcf.activity.fieldQuantityWithUnit": "활동량 ({{unit}})",
+  "pcf.activity.previewEmissions":
+    "저장 시 PCF에 {{amount}} tCO2e가 반영됩니다.",
+  "pcf.activity.computedEmissions": "환산 배출량",
+  "pcf.activity.readMore": "더보기",
+  "pcf.activity.readLess": "접기",
+  "pcf.activity.charCount": "{{current}}/{{max}}",
+  "pcf.activity.saveSuccess": "활동 데이터가 저장되었습니다.",
+  "pcf.activity.saveError": "저장에 실패했습니다. 변경 사항을 되돌렸습니다.",
+  "pcf.activity.deleteSuccess": "활동 데이터가 삭제되었습니다.",
+  "pcf.activity.deleteError": "삭제에 실패했습니다. 변경 사항을 되돌렸습니다.",
+  "pcf.activity.invalidQuantity": "0보다 큰 활동량을 입력해 주세요.",
   "pcf.unit": "tCO2e",
   "companies.toolbar.country": "국가",
   "companies.toolbar.allCountries": "전체 국가",
@@ -541,25 +555,32 @@ const en: Messages = {
   "pcf.source.lpg": "LPG",
   "pcf.source.naturalGas": "Natural gas",
   "pcf.source.electricity": "Electricity",
-  "pcf.post.title": "Reduction notes",
-  "pcf.post.description":
-    "Record reduction plans and actions. Changes roll back automatically on save failure.",
-  "pcf.post.empty": "No reduction notes yet.",
-  "pcf.post.add": "Add note",
-  "pcf.post.edit": "Edit",
-  "pcf.post.delete": "Delete",
-  "pcf.post.save": "Save",
-  "pcf.post.cancel": "Cancel",
-  "pcf.post.fieldTitle": "Title",
-  "pcf.post.fieldMonth": "Target month",
-  "pcf.post.fieldContent": "Content",
-  "pcf.post.readMore": "Read more",
-  "pcf.post.readLess": "Show less",
-  "pcf.post.charCount": "{{current}}/{{max}}",
-  "pcf.post.saveSuccess": "Reduction note saved.",
-  "pcf.post.saveError": "Save failed. Your changes were rolled back.",
-  "pcf.post.deleteSuccess": "Reduction note deleted.",
-  "pcf.post.deleteError": "Delete failed. Your changes were rolled back.",
+  "pcf.activity.title": "Activity data input",
+  "pcf.activity.description":
+    "Enter activity amounts by company to apply emission factors and update PCF.",
+  "pcf.activity.empty": "No activity records yet.",
+  "pcf.activity.add": "Add activity",
+  "pcf.activity.edit": "Edit",
+  "pcf.activity.delete": "Delete",
+  "pcf.activity.save": "Save",
+  "pcf.activity.cancel": "Cancel",
+  "pcf.activity.fieldTitle": "Title",
+  "pcf.activity.fieldMonth": "Date (year · month)",
+  "pcf.activity.fieldSource": "Activity type",
+  "pcf.activity.fieldDescription": "Description",
+  "pcf.activity.fieldQuantity": "Quantity",
+  "pcf.activity.fieldQuantityWithUnit": "Quantity ({{unit}})",
+  "pcf.activity.previewEmissions":
+    "Saving will add {{amount}} tCO2e to PCF.",
+  "pcf.activity.computedEmissions": "Calculated emissions",
+  "pcf.activity.readMore": "Read more",
+  "pcf.activity.readLess": "Show less",
+  "pcf.activity.charCount": "{{current}}/{{max}}",
+  "pcf.activity.saveSuccess": "Activity record saved.",
+  "pcf.activity.saveError": "Save failed. Your changes were rolled back.",
+  "pcf.activity.deleteSuccess": "Activity record deleted.",
+  "pcf.activity.deleteError": "Delete failed. Your changes were rolled back.",
+  "pcf.activity.invalidQuantity": "Enter a quantity greater than zero.",
   "pcf.unit": "tCO2e",
   "companies.toolbar.country": "Country",
   "companies.toolbar.allCountries": "All countries",

@@ -4,22 +4,32 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { DEFAULT_DATE_RANGE } from "@/app/constants";
-import { fetchCompanies, fetchCountries, fetchPosts } from "@/app/lib/api";
-import { usePostsStore } from "@/app/store";
+import {
+  fetchActivityRecords,
+  fetchCompanies,
+  fetchCountries,
+} from "@/app/lib/api";
+import { useActivityRecordsStore } from "@/app/store";
+import type { ActivityRecord } from "@/app/types/activity-record";
 import type { Company } from "@/app/types/company";
 import type { Country } from "@/app/types/country";
-import type { Post } from "@/app/types/post";
-import { computePcfMetrics } from "@/app/utils/emissions";
+import {
+  computePcfMetrics,
+  mergeEmissionsWithActivityRecords,
+} from "@/app/utils";
 
-const mergePosts = (fetchedPosts: Post[], localPosts: Post[]) => {
-  const merged = new Map<string, Post>();
+const mergeActivityRecords = (
+  fetchedRecords: ActivityRecord[],
+  localRecords: ActivityRecord[],
+) => {
+  const merged = new Map<string, ActivityRecord>();
 
-  for (const post of fetchedPosts) {
-    merged.set(post.id, post);
+  for (const record of fetchedRecords) {
+    merged.set(record.id, record);
   }
 
-  for (const post of localPosts) {
-    merged.set(post.id, post);
+  for (const record of localRecords) {
+    merged.set(record.id, record);
   }
 
   return Array.from(merged.values());
@@ -30,8 +40,8 @@ export const usePcfData = () => {
   const companyFromUrl = searchParams.get("company");
   const [companies, setCompanies] = useState<Company[]>([]);
   const [countries, setCountries] = useState<Country[]>([]);
-  const posts = usePostsStore((state) => state.posts);
-  const setPosts = usePostsStore((state) => state.setPosts);
+  const records = useActivityRecordsStore((state) => state.records);
+  const setRecords = useActivityRecordsStore((state) => state.setRecords);
   const [selectedCountryCode, setSelectedCountryCode] = useState("");
   const [selectedCompanyId, setSelectedCompanyId] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -48,16 +58,16 @@ export const usePcfData = () => {
     setError(null);
 
     try {
-      const localPosts = usePostsStore.getState().posts;
-      const [nextCompanies, nextCountries, fetchedPosts] = await Promise.all([
+      const localRecords = useActivityRecordsStore.getState().records;
+      const [nextCompanies, nextCountries, fetchedRecords] = await Promise.all([
         fetchCompanies(),
         fetchCountries(),
-        fetchPosts(),
+        fetchActivityRecords(),
       ]);
 
       setCompanies(nextCompanies);
       setCountries(nextCountries);
-      setPosts(mergePosts(fetchedPosts, localPosts));
+      setRecords(mergeActivityRecords(fetchedRecords, localRecords));
       setSelectedCountryCode((currentCode) => {
         if (
           currentCode &&
@@ -87,7 +97,7 @@ export const usePcfData = () => {
         setIsLoading(false);
       }
     }
-  }, [companyFromUrl, setPosts]);
+  }, [companyFromUrl, setRecords]);
 
   useEffect(() => {
     void loadData();
@@ -136,17 +146,29 @@ export const usePcfData = () => {
     [companies, selectedCompanyId],
   );
 
-  const metrics = useMemo(
-    () => computePcfMetrics(selectedCompany?.emissions ?? [], DEFAULT_DATE_RANGE),
-    [selectedCompany],
+  const companyActivityRecords = useMemo(
+    () =>
+      records
+        .filter((record) => record.companyId === selectedCompanyId)
+        .sort((left, right) => right.yearMonth.localeCompare(left.yearMonth)),
+    [records, selectedCompanyId],
   );
 
-  const companyPosts = useMemo(
-    () =>
-      posts
-        .filter((post) => post.resourceUid === selectedCompanyId)
-        .sort((left, right) => right.dateTime.localeCompare(left.dateTime)),
-    [posts, selectedCompanyId],
+  const combinedEmissions = useMemo(() => {
+    if (!selectedCompany) {
+      return [];
+    }
+
+    return mergeEmissionsWithActivityRecords(
+      selectedCompany.emissions,
+      companyActivityRecords,
+      selectedCompany.country,
+    );
+  }, [selectedCompany, companyActivityRecords]);
+
+  const metrics = useMemo(
+    () => computePcfMetrics(combinedEmissions, DEFAULT_DATE_RANGE),
+    [combinedEmissions],
   );
 
   return {
@@ -158,7 +180,7 @@ export const usePcfData = () => {
     setSelectedCompanyId,
     selectedCompany,
     metrics,
-    companyPosts,
+    companyActivityRecords,
     isLoading,
     isRefreshing,
     error,
