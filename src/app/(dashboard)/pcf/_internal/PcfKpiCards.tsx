@@ -1,5 +1,7 @@
 "use client";
 
+import { useMemo } from "react";
+
 import {
   Card,
   CardContent,
@@ -13,17 +15,26 @@ import {
 } from "@/app/constants";
 import { useTranslation } from "@/app/hooks";
 import {
+  computeEstimatedCarbonTax,
+  formatCarbonTaxAmount,
+  formatCarbonTaxRate,
   formatPercentChange,
   formatTco2e,
   type PcfMetrics,
-} from "@/app/utils/emissions";
+} from "@/app/utils";
 
 type PcfKpiCardsProps = {
   metrics: PcfMetrics;
+  countryCode: string;
 };
 
-const PcfKpiCards = ({ metrics }: PcfKpiCardsProps) => {
+const PcfKpiCards = ({ metrics, countryCode }: PcfKpiCardsProps) => {
   const { t } = useTranslation();
+
+  const estimatedCarbonTax = useMemo(
+    () => computeEstimatedCarbonTax(metrics.totalEmissions, countryCode),
+    [metrics.totalEmissions, countryCode],
+  );
 
   const topSourceLabel =
     metrics.topSource &&
@@ -45,6 +56,12 @@ const PcfKpiCards = ({ metrics }: PcfKpiCardsProps) => {
       unit: t("pcf.unit"),
     },
     {
+      title: t("pcf.kpi.estimatedCarbonTax"),
+      description: t("pcf.kpi.estimatedCarbonTaxDesc"),
+      value: formatCarbonTaxAmount(estimatedCarbonTax),
+      unit: formatCarbonTaxRate(estimatedCarbonTax),
+    },
+    {
       title: t("pcf.kpi.topSource"),
       description: t("pcf.kpi.topSourceDesc"),
       value: topSourceLabel,
@@ -59,7 +76,7 @@ const PcfKpiCards = ({ metrics }: PcfKpiCardsProps) => {
   ];
 
   return (
-    <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
       {cards.map((card) => (
         <Card key={card.title}>
           <CardHeader className="pb-2">

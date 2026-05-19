@@ -5,6 +5,12 @@ export {
   SETTINGS_STORAGE_KEY,
 } from "./theme";
 export {
+  computeEstimatedCarbonTax,
+  formatCarbonTaxAmount,
+  formatCarbonTaxRate,
+  type EstimatedCarbonTax,
+} from "./carbon-tax";
+export {
   computeCompaniesPortfolioMetrics,
   filterCompaniesByCountry,
   type CompaniesPortfolioMetrics,

@@ -75,6 +75,8 @@ export type MessageKey =
   | "pcf.kpi.topSourceDesc"
   | "pcf.kpi.monthOverMonth"
   | "pcf.kpi.monthOverMonthDesc"
+  | "pcf.kpi.estimatedCarbonTax"
+  | "pcf.kpi.estimatedCarbonTaxDesc"
   | "pcf.chart.monthlyTrend"
   | "pcf.chart.monthlyTrendDesc"
   | "pcf.chart.scopeBreakdown"
@@ -294,6 +296,9 @@ const ko: Messages = {
   "pcf.kpi.topSourceDesc": "기간 내 최대 비중 배출원",
   "pcf.kpi.monthOverMonth": "전월 대비",
   "pcf.kpi.monthOverMonthDesc": "최근 월 대비 변화율",
+  "pcf.kpi.estimatedCarbonTax": "예상 탄소세",
+  "pcf.kpi.estimatedCarbonTaxDesc":
+    "회사 소재국 탄소세 단가 × 선택 기간 누적 배출량 (참고 추정치)",
   "pcf.chart.monthlyTrend": "월별 배출 추이",
   "pcf.chart.monthlyTrendDesc": "Scope별 월간 tCO2e 변화",
   "pcf.chart.scopeBreakdown": "Scope 구성",
@@ -518,6 +523,9 @@ const en: Messages = {
   "pcf.kpi.topSourceDesc": "Highest-share emission source",
   "pcf.kpi.monthOverMonth": "Month over month",
   "pcf.kpi.monthOverMonthDesc": "Change vs. previous month",
+  "pcf.kpi.estimatedCarbonTax": "Estimated carbon tax",
+  "pcf.kpi.estimatedCarbonTaxDesc":
+    "Country carbon price × cumulative emissions in selected period (reference estimate)",
   "pcf.chart.monthlyTrend": "Monthly trend",
   "pcf.chart.monthlyTrendDesc": "Monthly tCO2e by Scope",
   "pcf.chart.scopeBreakdown": "Scope breakdown",

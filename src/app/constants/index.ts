@@ -8,6 +8,12 @@ export {
 } from "./dashboard";
 
 export {
+  CARBON_TAX_POLICY_BY_COUNTRY,
+  DEFAULT_CARBON_TAX_POLICY,
+  type CarbonTaxPolicy,
+} from "./carbon-tax";
+
+export {
   getMessage,
   MESSAGES,
   type Locale,

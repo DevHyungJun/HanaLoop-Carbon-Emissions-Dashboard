@@ -26,8 +26,8 @@ const PcfSkeleton = () => {
         </div>
       </section>
 
-      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {Array.from({ length: 4 }).map((_, index) => (
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        {Array.from({ length: 5 }).map((_, index) => (
           <Card key={index}>
             <CardHeader className="space-y-2 pb-2">
               <Skeleton className="h-3 w-24" />

@@ -24,6 +24,7 @@ const Pcf = () => {
     setSelectedCompanyId,
     metrics,
     companyPosts,
+    selectedCompany,
     isLoading,
     isRefreshing,
     error,
@@ -58,7 +59,10 @@ const Pcf = () => {
         isRefreshing={isRefreshing}
       />
 
-      <PcfKpiCards metrics={metrics} />
+      <PcfKpiCards
+        metrics={metrics}
+        countryCode={selectedCompany?.country ?? selectedCountryCode}
+      />
 
       <PcfMonthlyTrendChart data={metrics.monthlyScopeTrend} />
 
