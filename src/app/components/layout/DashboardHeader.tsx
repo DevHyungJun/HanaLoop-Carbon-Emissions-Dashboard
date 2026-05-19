@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Menu } from "lucide-react";
+import { Menu, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 
 import { Button } from "@/app/components/common";
 import {
@@ -13,6 +13,11 @@ import { useTranslation } from "@/app/hooks";
 import { useDashboardStore } from "@/app/store";
 import { cn } from "@/app/utils";
 
+import {
+  getSidebarIconButtonStateClass,
+  SIDEBAR_ICON_BUTTON_CLASS,
+} from "./sidebarStyles";
+
 type DashboardHeaderProps = {
   className?: string;
 };
@@ -22,6 +27,12 @@ export function DashboardHeader({ className }: DashboardHeaderProps) {
   const { t } = useTranslation();
   const currentPage = getNavItemByPathname(pathname);
   const toggleDrawer = useDashboardStore((state) => state.toggleDrawer);
+  const isSidebarCollapsed = useDashboardStore(
+    (state) => state.isSidebarCollapsed,
+  );
+  const toggleSidebarCollapsed = useDashboardStore(
+    (state) => state.toggleSidebarCollapsed,
+  );
 
   return (
     <header
@@ -40,6 +51,27 @@ export function DashboardHeader({ className }: DashboardHeaderProps) {
       >
         <Menu className="size-5" />
       </Button>
+
+      <button
+        type="button"
+        aria-label={
+          isSidebarCollapsed
+            ? t("common.expandSidebar")
+            : t("common.collapseSidebar")
+        }
+        onClick={toggleSidebarCollapsed}
+        className={cn(
+          "hidden items-center justify-center lg:flex",
+          SIDEBAR_ICON_BUTTON_CLASS,
+          getSidebarIconButtonStateClass(false),
+        )}
+      >
+        {isSidebarCollapsed ? (
+          <PanelLeftOpen className="size-4" aria-hidden />
+        ) : (
+          <PanelLeftClose className="size-4" aria-hidden />
+        )}
+      </button>
 
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">

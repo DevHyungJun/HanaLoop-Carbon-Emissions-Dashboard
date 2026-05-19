@@ -10,11 +10,17 @@ import { useTranslation } from "@/app/hooks";
 import { useDashboardStore } from "@/app/store";
 import { cn } from "@/app/utils";
 
+import {
+  getSidebarIconButtonStateClass,
+  SIDEBAR_ICON_BUTTON_CLASS,
+} from "./sidebarStyles";
+
 type NavLinkProps = {
   href: string;
   label: string;
   icon: LucideIcon;
   isActive: boolean;
+  isSidebarCollapsed: boolean;
   onNavigate: () => void;
 };
 
@@ -23,21 +29,33 @@ function NavLink({
   label,
   icon: Icon,
   isActive,
+  isSidebarCollapsed,
   onNavigate,
 }: NavLinkProps) {
   return (
     <Link
       href={href}
       onClick={onNavigate}
+      title={isSidebarCollapsed ? label : undefined}
+      aria-label={label}
       className={cn(
-        "flex items-center gap-2 rounded-lg border px-3 py-2 text-sm transition-colors",
-        isActive
-          ? "border-emerald-500/40 bg-emerald-50 font-medium text-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-100"
-          : "border-transparent text-foreground hover:bg-muted",
+        "flex items-center rounded-lg border text-sm transition-colors",
+        isSidebarCollapsed
+          ? cn(
+              "justify-center gap-0",
+              SIDEBAR_ICON_BUTTON_CLASS,
+              getSidebarIconButtonStateClass(isActive),
+            )
+          : cn(
+              "w-full justify-start gap-2 px-3 py-2 text-left",
+              getSidebarIconButtonStateClass(isActive),
+            ),
       )}
     >
       <Icon className="size-4 shrink-0" aria-hidden />
-      {label}
+      <span className={cn("truncate", isSidebarCollapsed && "lg:hidden")}>
+        {label}
+      </span>
     </Link>
   );
 }
@@ -46,6 +64,9 @@ export function NavigationDrawer() {
   const pathname = usePathname();
   const { t } = useTranslation();
   const isDrawerOpen = useDashboardStore((state) => state.isDrawerOpen);
+  const isSidebarCollapsed = useDashboardStore(
+    (state) => state.isSidebarCollapsed,
+  );
   const setDrawerOpen = useDashboardStore((state) => state.setDrawerOpen);
 
   const handleCloseDrawer = () => {
@@ -70,8 +91,10 @@ export function NavigationDrawer() {
       <aside
         aria-label="대시보드 탐색"
         className={cn(
-          "fixed inset-y-0 left-0 z-50 flex flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground transition-transform duration-300 lg:static lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-50 flex shrink-0 flex-col overflow-hidden border-r border-sidebar-border bg-sidebar text-sidebar-foreground transition-[width,transform] duration-300",
           DRAWER_WIDTH_CLASS,
+          isSidebarCollapsed ? "lg:w-16" : "lg:w-72",
+          "lg:static lg:translate-x-0",
           isDrawerOpen ? "translate-x-0" : "-translate-x-full",
         )}
       >
@@ -88,32 +111,59 @@ export function NavigationDrawer() {
           </Button>
         </div>
 
-        <nav className="flex-1 space-y-6 overflow-y-auto p-4">
-          {NAV_SECTIONS.map((section) => {
-            const sectionItems = NAV_ITEMS.filter(
-              (item) => item.section === section.id,
-            );
+        <nav
+          className={cn(
+            "flex-1 overflow-x-hidden overflow-y-auto p-4 text-left",
+            isSidebarCollapsed && "lg:p-2",
+          )}
+        >
+          <div
+            className={cn(
+              "hidden space-y-1",
+              isSidebarCollapsed && "lg:block",
+            )}
+          >
+            {NAV_ITEMS.map((item) => (
+              <NavLink
+                key={item.href}
+                href={item.href}
+                label={t(item.labelKey)}
+                icon={item.icon}
+                isActive={isNavItemActive(item.href)}
+                isSidebarCollapsed
+                onNavigate={handleCloseDrawer}
+              />
+            ))}
+          </div>
 
-            return (
-              <section key={section.id} className="space-y-2">
-                <h2 className="px-1 text-xs font-medium tracking-wide text-muted-foreground uppercase">
-                  {t(section.labelKey)}
-                </h2>
-                <div className="grid gap-1">
-                  {sectionItems.map((item) => (
-                    <NavLink
-                      key={item.href}
-                      href={item.href}
-                      label={t(item.labelKey)}
-                      icon={item.icon}
-                      isActive={isNavItemActive(item.href)}
-                      onNavigate={handleCloseDrawer}
-                    />
-                  ))}
-                </div>
-              </section>
-            );
-          })}
+          <div className={cn("space-y-6", isSidebarCollapsed && "lg:hidden")}>
+            {NAV_SECTIONS.map((section) => {
+              const sectionItems = NAV_ITEMS.filter(
+                (item) => item.section === section.id,
+              );
+
+              return (
+                <section key={section.id} className="space-y-2">
+                  <h2 className="px-1 text-left text-xs font-medium tracking-wide text-muted-foreground uppercase">
+                    {t(section.labelKey)}
+                  </h2>
+                  <div className="grid gap-1">
+                    {sectionItems.map((item) => (
+                      <NavLink
+                        key={item.href}
+                        href={item.href}
+                        label={t(item.labelKey)}
+                        icon={item.icon}
+                        isActive={isNavItemActive(item.href)}
+                        isSidebarCollapsed={false}
+                        onNavigate={handleCloseDrawer}
+                      />
+                    ))}
+                  </div>
+                </section>
+              );
+            })}
+          </div>
         </nav>
       </aside>
     </>

@@ -7,6 +7,8 @@ export type MessageKey =
   | "common.explore"
   | "common.openMenu"
   | "common.closeMenu"
+  | "common.collapseSidebar"
+  | "common.expandSidebar"
   | "nav.sections.overview"
   | "nav.sections.analysis"
   | "nav.sections.data"
@@ -38,6 +40,8 @@ const ko: Messages = {
   "common.explore": "탐색",
   "common.openMenu": "메뉴 열기",
   "common.closeMenu": "메뉴 닫기",
+  "common.collapseSidebar": "사이드바 접기",
+  "common.expandSidebar": "사이드바 펼치기",
   "nav.sections.overview": "개요",
   "nav.sections.analysis": "분석",
   "nav.sections.data": "데이터",
@@ -71,6 +75,8 @@ const en: Messages = {
   "common.explore": "Explore",
   "common.openMenu": "Open menu",
   "common.closeMenu": "Close menu",
+  "common.collapseSidebar": "Collapse sidebar",
+  "common.expandSidebar": "Expand sidebar",
   "nav.sections.overview": "Overview",
   "nav.sections.analysis": "Analysis",
   "nav.sections.data": "Data",

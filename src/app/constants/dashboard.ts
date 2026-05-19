@@ -5,6 +5,8 @@ export const DEFAULT_DATE_RANGE = {
 
 export const DRAWER_WIDTH_CLASS = "w-72";
 
+export const DRAWER_COLLAPSED_WIDTH_CLASS = "w-16";
+
 export const APP_NAME = "HanaLoop";
 
 export const APP_TITLE = "Carbon Emissions Dashboard";

@@ -3,6 +3,7 @@ export {
   APP_NAME,
   APP_TITLE,
   DEFAULT_DATE_RANGE,
+  DRAWER_COLLAPSED_WIDTH_CLASS,
   DRAWER_WIDTH_CLASS,
 } from "./dashboard";
 export {
