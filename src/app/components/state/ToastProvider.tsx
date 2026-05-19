@@ -187,7 +187,3 @@ export const useToast = () => {
 
   return context;
 };
-
-export function Providers({ children }: { children: ReactNode }) {
-  return <ToastProvider>{children}</ToastProvider>;
-}

@@ -5,59 +5,70 @@ import {
   Calculator,
   Database,
   FlaskConical,
+  Settings,
 } from "lucide-react";
 
-export type NavSectionId = "overview" | "analysis" | "data";
+import type { MessageKey } from "./i18n";
+
+export type NavSectionId = "overview" | "analysis" | "data" | "settings";
 
 export type NavItem = {
   href: string;
-  label: string;
-  description: string;
+  labelKey: MessageKey;
+  descriptionKey: MessageKey;
   icon: LucideIcon;
   section: NavSectionId;
 };
 
-export const NAV_SECTIONS: { id: NavSectionId; label: string }[] = [
-  { id: "overview", label: "개요" },
-  { id: "analysis", label: "분석" },
-  { id: "data", label: "데이터" },
+export const NAV_SECTIONS: { id: NavSectionId; labelKey: MessageKey }[] = [
+  { id: "overview", labelKey: "nav.sections.overview" },
+  { id: "analysis", labelKey: "nav.sections.analysis" },
+  { id: "data", labelKey: "nav.sections.data" },
+  { id: "settings", labelKey: "nav.sections.settings" },
 ];
 
 export const NAV_ITEMS: NavItem[] = [
   {
     href: "/",
-    label: "플랫폼 소개",
-    description: "PCF 개념과 대시보드 사용 방법을 안내합니다.",
+    labelKey: "nav.platformOverview",
+    descriptionKey: "nav.platformOverviewDesc",
     icon: BookOpen,
     section: "overview",
   },
   {
     href: "/pcf",
-    label: "PCF 계산",
-    description: "제품별 탄소 발자국 결과와 KPI·차트를 확인합니다.",
+    labelKey: "nav.pcf",
+    descriptionKey: "nav.pcfDesc",
     icon: Calculator,
     section: "analysis",
   },
   {
     href: "/companies",
-    label: "회사",
-    description: "조직별 배출 현황과 계열사 비교를 제공합니다.",
+    labelKey: "nav.companies",
+    descriptionKey: "nav.companiesDesc",
     icon: Building2,
     section: "analysis",
   },
   {
     href: "/activity-data",
-    label: "활동 데이터",
-    description: "원자재, 전기, 운송 등 활동량 입력 데이터를 관리합니다.",
+    labelKey: "nav.activityData",
+    descriptionKey: "nav.activityDataDesc",
     icon: Database,
     section: "data",
   },
   {
     href: "/emission-factors",
-    label: "배출 계수",
-    description: "활동 데이터를 tCO2e로 변환하는 배출 계수를 조회합니다.",
+    labelKey: "nav.emissionFactors",
+    descriptionKey: "nav.emissionFactorsDesc",
     icon: FlaskConical,
     section: "data",
+  },
+  {
+    href: "/settings",
+    labelKey: "nav.settings",
+    descriptionKey: "nav.settingsDesc",
+    icon: Settings,
+    section: "settings",
   },
 ];
 

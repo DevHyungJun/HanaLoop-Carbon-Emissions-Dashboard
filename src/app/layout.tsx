@@ -21,7 +21,7 @@ export default function RootLayout({
     <html
       lang="ko"
       className={cn(
-        "h-full",
+        "h-dvh",
         "antialiased",
         pretendard.variable,
         "font-sans",
@@ -29,7 +29,10 @@ export default function RootLayout({
       )}
     >
       <body
-        className={`${pretendard.className} min-h-full flex flex-col font-sans`}
+        className={cn(
+          pretendard.className,
+          "flex h-dvh flex-col font-sans",
+        )}
       >
         <Providers>{children}</Providers>
       </body>

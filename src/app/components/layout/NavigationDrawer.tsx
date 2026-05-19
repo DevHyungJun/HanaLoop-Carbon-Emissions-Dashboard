@@ -6,6 +6,7 @@ import { X, type LucideIcon } from "lucide-react";
 
 import { Button } from "@/app/components/common";
 import { DRAWER_WIDTH_CLASS, NAV_ITEMS, NAV_SECTIONS } from "@/app/constants";
+import { useTranslation } from "@/app/hooks";
 import { useDashboardStore } from "@/app/store";
 import { cn } from "@/app/utils";
 
@@ -43,6 +44,7 @@ function NavLink({
 
 export function NavigationDrawer() {
   const pathname = usePathname();
+  const { t } = useTranslation();
   const isDrawerOpen = useDashboardStore((state) => state.isDrawerOpen);
   const setDrawerOpen = useDashboardStore((state) => state.setDrawerOpen);
 
@@ -74,12 +76,12 @@ export function NavigationDrawer() {
         )}
       >
         <div className="flex h-14 items-center justify-between border-b border-sidebar-border px-4 lg:hidden">
-          <span className="text-sm font-semibold">탐색</span>
+          <span className="text-sm font-semibold">{t("common.explore")}</span>
           <Button
             type="button"
             variant="ghost"
             size="icon"
-            aria-label="메뉴 닫기"
+            aria-label={t("common.closeMenu")}
             onClick={handleCloseDrawer}
           >
             <X className="size-5" />
@@ -95,14 +97,14 @@ export function NavigationDrawer() {
             return (
               <section key={section.id} className="space-y-2">
                 <h2 className="px-1 text-xs font-medium tracking-wide text-muted-foreground uppercase">
-                  {section.label}
+                  {t(section.labelKey)}
                 </h2>
                 <div className="grid gap-1">
                   {sectionItems.map((item) => (
                     <NavLink
                       key={item.href}
                       href={item.href}
-                      label={item.label}
+                      label={t(item.labelKey)}
                       icon={item.icon}
                       isActive={isNavItemActive(item.href)}
                       onNavigate={handleCloseDrawer}

@@ -1,6 +1,3 @@
-export {
-  Providers,
-  ToastProvider,
-  useToast,
-  type ToastType,
-} from "./ToastProvider";
+export { Providers } from "./Providers";
+export { SettingsProvider } from "./SettingsProvider";
+export { ToastProvider, useToast, type ToastType } from "./ToastProvider";

@@ -5,11 +5,11 @@ import { Menu } from "lucide-react";
 
 import { Button } from "@/app/components/common";
 import {
-  APP_DESCRIPTION,
   APP_NAME,
   DEFAULT_DATE_RANGE,
   getNavItemByPathname,
 } from "@/app/constants";
+import { useTranslation } from "@/app/hooks";
 import { useDashboardStore } from "@/app/store";
 import { cn } from "@/app/utils";
 
@@ -19,6 +19,7 @@ type DashboardHeaderProps = {
 
 export function DashboardHeader({ className }: DashboardHeaderProps) {
   const pathname = usePathname();
+  const { t } = useTranslation();
   const currentPage = getNavItemByPathname(pathname);
   const toggleDrawer = useDashboardStore((state) => state.toggleDrawer);
 
@@ -33,7 +34,7 @@ export function DashboardHeader({ className }: DashboardHeaderProps) {
         type="button"
         variant="ghost"
         size="icon"
-        aria-label="메뉴 열기"
+        aria-label={t("common.openMenu")}
         className="lg:hidden"
         onClick={toggleDrawer}
       >
@@ -47,11 +48,11 @@ export function DashboardHeader({ className }: DashboardHeaderProps) {
           </span>
           <span className="hidden text-border sm:inline">|</span>
           <h1 className="truncate text-sm font-semibold text-foreground sm:text-base">
-            {currentPage.label}
+            {t(currentPage.labelKey)}
           </h1>
         </div>
         <p className="truncate text-xs text-muted-foreground">
-          {currentPage.description || APP_DESCRIPTION}
+          {t(currentPage.descriptionKey)}
         </p>
       </div>
 

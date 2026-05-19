@@ -6,6 +6,13 @@ export {
   DRAWER_WIDTH_CLASS,
 } from "./dashboard";
 export {
+  getMessage,
+  MESSAGES,
+  type Locale,
+  type MessageKey,
+  type Theme,
+} from "./i18n";
+export {
   getNavItemByPathname,
   NAV_ITEMS,
   NAV_SECTIONS,
