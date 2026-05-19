@@ -5,7 +5,6 @@ import { Menu, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 
 import { Button } from "@/app/components/common";
 import {
-  APP_NAME,
   DEFAULT_DATE_RANGE,
   getNavItemByPathname,
 } from "@/app/constants";
@@ -17,7 +16,7 @@ import {
   getSidebarIconButtonStateClass,
   SIDEBAR_ICON_BUTTON_CLASS,
 } from "./sidebarStyles";
-import Image from "next/image";
+import { DashboardBrand } from "./DashboardBrand";
 
 type DashboardHeaderProps = {
   className?: string;
@@ -76,10 +75,7 @@ export function DashboardHeader({ className }: DashboardHeaderProps) {
 
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-2 text-sm font-semibold tracking-wide text-emerald-600 uppercase">
-            <Image src="/hanaloop-logo.png" alt="logo" width={20} height={20} />
-            <span>{APP_NAME}</span>
-          </div>
+          <DashboardBrand />
           <span className="hidden text-border sm:inline">|</span>
           <h1 className="truncate text-sm font-semibold text-foreground sm:text-base">
             {t(currentPage.labelKey)}

@@ -14,6 +14,7 @@ import {
   getSidebarIconButtonStateClass,
   SIDEBAR_ICON_BUTTON_CLASS,
 } from "./sidebarStyles";
+import { DashboardBrand } from "./DashboardBrand";
 
 type NavLinkProps = {
   href: string;
@@ -99,7 +100,7 @@ export function NavigationDrawer() {
         )}
       >
         <div className="flex h-14 items-center justify-between border-b border-sidebar-border px-4 lg:hidden">
-          <span className="text-sm font-semibold">{t("common.explore")}</span>
+          <DashboardBrand />
           <Button
             type="button"
             variant="ghost"
